@@ -1,8 +1,9 @@
 from django.test import TestCase
 from .models import ImagerProfile, User
 import factory
+import random
 
-class UserFactory(factory.django.DjandoModelFactory):
+class UserFactory(factory.django.DjangoModelFactory):
     """ defines a mock user instance for testing """
     class Meta:
         model = User
@@ -11,17 +12,17 @@ class UserFactory(factory.django.DjandoModelFactory):
     email = factory.Faker('email')
 
 
-class ProfileFactory(factory.django.DjangoModeFactory):
+class ProfileFactory(factory.django.DjangoModelFactory):
     """ defines a mock profile instance for testing """
     class Meta:
         model = ImagerProfile
     
     # bio = factory.Faker('')
-    phone = factory.Faker('phone')
+    phone = factory.Faker('phone_number')
     # location = factory.Faker('')
-    website = factory.Faker('website')
-    # fee = factory.Faker('')
-    # is_active = factory.Faker('')
+    website = factory.Faker('domain_name')
+    fee = round(random.uniform(0, 100), 2)
+    is_active = factory.Faker('boolean')
     # camera = factory.Faker('')
     # services = factory.Faker('')
     # photostyles = factory.Faker('')
