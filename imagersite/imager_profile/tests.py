@@ -54,3 +54,4 @@ class ProfileUnitTests(TestCase):
     def test_user_can_see_its_profle(self):
         one_user = User.objects.first()
         self.assertIsNotNone(one_user.profile)
+
