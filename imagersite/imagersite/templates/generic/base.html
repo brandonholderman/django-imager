@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% load static %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Django Shopper Demo</title>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="{% url 'home' %}">Home</a></li>
+                {% if user.is_authenticated %}
+                <li><a href="{% url '' %}">Profile</a></li>
+                <li><a href="{% url '' %}">Products</a></li>
+                <li><a href="{% url 'auth_logout' %}">Logout</a></li>
+                {% else %}
+                <li><a href="{% url 'registration_register' %}">Signup</a></li>
+                {% endif %}
+                <li><a href="{% url 'auth_login' %}">Signin</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        {% block content %}
+        <h3>No Content</h3>
+        {% endblock content%}
+    </main>
+    <footer>
+
+    </footer>
+
+</body>
+
+</html>
