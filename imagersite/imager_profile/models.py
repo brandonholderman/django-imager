@@ -5,7 +5,8 @@ from django.contrib.auth.models import User
 
 class ImagerProfile(models.Model):
     """Creates properties for ImagerProfile class"""
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
+    user = models.OneToOneField(User, on_delete=models.CASCADE,
+                                related_name='profile')
 
     bio = models.TextField(blank=True, null=True)
     phone = models.CharField(max_length=20, blank=True, null=True)

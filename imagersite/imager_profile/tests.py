@@ -18,7 +18,8 @@ class ProfileFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = ImagerProfile
 
-    bio = 'Tandon Holderbone was a pioneer of sorts only indulging in the finest things life has to offer...'
+    bio = '''Tandon Holderbone was a pioneer of sorts only
+    indulging in the finest things life has to offer...'''
     phone = factory.Faker('phone_number')
     location = factory.Faker('state_abbr')
     website = factory.Faker('domain_name')
@@ -30,7 +31,8 @@ class ProfileFactory(factory.django.DjangoModelFactory):
 
 
 class ProfileUnitTests(TestCase):
-    """ utlitizes the above classes to generate instances of
+    """
+    utlitizes the above classes to generate instances of
     user/profiles for use in testing
     """
     @classmethod
