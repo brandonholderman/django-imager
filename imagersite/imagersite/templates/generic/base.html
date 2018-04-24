@@ -16,15 +16,18 @@
             <ul>
                 <li><a href="{% url 'home' %}">Home</a></li>
                 {% if user.is_authenticated %}
-                <li><a href="{% url '' %}">Profile</a></li>
-                <li><a href="{% url '' %}">Products</a></li>
+                <li><a href="{% url 'home' %}">Profile</a></li>
+                <li><a href="{% url 'home' %}">Products</a></li>
                 <li><a href="{% url 'auth_logout' %}">Logout</a></li>
                 {% else %}
                 <li><a href="{% url 'registration_register' %}">Signup</a></li>
-                {% endif %}
                 <li><a href="{% url 'auth_login' %}">Signin</a></li>
+                {% endif %}
             </ul>
         </nav>
+        {% if user.is_authenticated %}
+        <h3>Welcome to Imager, {{ user.username }}</h3>
+        {% endif %}
     </header>
     <main>
         {% block content %}
