@@ -1,5 +1,6 @@
 from django.test import TestCase
-from .models import ImagerProfile, User
+from .models import Album, Photo, User
+from imager_profile.models import ImagerProfile
 import factory
 import random
 
@@ -11,7 +12,6 @@ class UserFactory(factory.django.DjangoModelFactory):
 
     username = factory.Faker('user_name')
     email = factory.Faker('email')
-
 
 class ProfileFactory(factory.django.DjangoModelFactory):
     """ defines a mock profile instance for testing """
@@ -30,6 +30,33 @@ class ProfileFactory(factory.django.DjangoModelFactory):
     photostyles = 'night'
 
 
+class AlbumFactory(factory.django.DjangoModelFactory):
+    """ defines a mock album instance for testing """
+    class Meta:
+        model = Album
+
+    name = factory.Faker('name')
+    description = factory.Faker('sentence')
+    date_created = factory.Faker('date_time')
+    date_modified = factory.Faker('date_time')
+    date_published = factory.Faker('date_time')
+    published = 'PUBLIC'
+
+
+class PhotoFactory(factory.django.DjangoModelFactory):
+    """ defines a mock photo instance for testing """
+    class Meta:
+        model = Photo
+
+    # image = factory.Faker('name')
+    title = factory.Faker('words')
+    description = factory.Faker('sentence')
+    date_uploaded = factory.Faker('date_time')
+    date_modified = factory.Faker('date_time')
+    date_published = factory.Faker('date_time')
+    published = 'PUBLIC'
+
+
 class ProfileUnitTests(TestCase):
     """
     utlitizes the above classes to generate instances of
@@ -45,6 +72,13 @@ class ProfileUnitTests(TestCase):
 
             profile = ProfileFactory.create(user=user)
             profile.save()
+
+            album = AlbumFactory.create(user=user)
+            album.save()
+
+            photo = PhotoFactory.create(album=album)
+            photo.save()
+
 
     @classmethod
     def tearDownClass(cls):

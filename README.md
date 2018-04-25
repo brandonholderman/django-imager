@@ -1,7 +1,7 @@
 # Imager
 
 **Author**: Tyler Fishbone and Brandon Holderman
-**Version**: 0.0.1
+**Version**: 0.0.3
 
 ## Overview
 This website will be an imgur analog, made to for use in learning how to use the Django web framework.
@@ -20,4 +20,6 @@ For developer use:
 This application utilizes the Django web framework and postgresql for its databse
 
 ## Change Log
+* 2018-04-25 - 1700 - created album and photo models and extended testing.
+* 2018-04-24 - 1700 - created user models and initial css changes.
 * 2018-04-23 - 1700 - initial scaffold complete.
