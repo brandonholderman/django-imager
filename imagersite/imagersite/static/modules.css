@@ -1,0 +1,51 @@
+
+body {
+    background-color: #2e3035;
+    color: white;
+}
+
+h1, h2, h3, h4, a {
+    font-family: 'Fredoka One', cursive;
+}
+
+p {
+    font-family: 'Open Sans', sans-serif;
+}
+
+header {
+    background-image: url("https://s.imgur.com/desktop-assets/desktop-assets/bg-home-2.f1df058d8494e2f402781cc93a7f4003.png");
+    height: 80px;
+}
+
+header #site-title {
+    width: 250px;
+    display: inline-block;
+    margin: 25px;
+}
+
+header h1 {
+    font-size: 2em;
+}
+
+header h3 {
+    float: right;
+    margin: 33px;
+}
+
+header nav {
+    float: right;
+    margin: 33px;
+}
+
+header nav ul li {
+    display: inline-block;
+}
+
+header nav ul li a {
+    text-decoration: none;
+    color: grey;
+}
+
+header nav ul li a:hover {
+    color: white;
+}

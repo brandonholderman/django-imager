@@ -25,7 +25,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', None)
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', False)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'testserver']
 
 
 # Application definition
@@ -127,3 +127,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Django Registration Settings
+ACCOUNT_ACTIVATION_DAYS = 1
+LOGIN_REDIRECT_URL = "/"
+if DEBUG:
+    EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
