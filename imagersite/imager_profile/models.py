@@ -35,6 +35,7 @@ class ImagerProfile(models.Model):
                  ('underwater', 'Underwater')))
 
     def __str__(self):
+        """returns string representation to user"""
         return self.user.username
 
     @classmethod
