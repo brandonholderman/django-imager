@@ -1,16 +1,27 @@
-{% extends 'generic/base.html' %} 
+{% extends "generic/base.html" %}
+{% load thumbnail %}
+{% load i18n %}
 
 {% block content %}
+{% if user.is_authenticated %}
 
-{% load thumbnail %}
+  <h3>Library of {{ profile.user.username }}</h3>
+  
+        {% if photos %}
+        {% for photo in photos %}
+        <img src="{{photo.image.url}}" class="library" alt="">
+        {% endfor %}
+        {% endif %}
+    
+  
+        {% if album %}
+        {% for item in album %}
+        <div class="library">
+            <h3>{{item.title}}</h3>
+            <img class="library" src="{{item.cover.url}}" alt="">
+        </div>
+        {% endfor %}
+        {% endif %}
 
-{% for album in albums %}
-
-{% thumbnail album.image "200x200" as img %}
-<img src="{{img.url}}">
-{% endthumbnail %}
-
-{% endfor %}
-
-<img src="{{photos.image.url}}" >{{ photos }}
-{% endblock %}
+{% endif %}
+{% endblock content %}

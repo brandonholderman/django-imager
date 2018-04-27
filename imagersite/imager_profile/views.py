@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from imager_images.models import Album, Photo
+from sorl.thumbnail import ImageField
 from .models import ImagerProfile
 
 
@@ -36,6 +37,7 @@ def settings_view(request, username=None):
 
 
 def library_view(request, username=None):
+    # import pdb; pdb.set_trace()
     owner = False
 
     if not username:
@@ -43,7 +45,8 @@ def library_view(request, username=None):
         owner = True
         if username == '':
             return redirect('home')
-
+    
+    profile = get_object_or_404(ImagerProfile, user__username=username)
     albums = Album.objects.filter(user__username=username)
     photos = Photo.objects.filter(album__user__username=username)
 
@@ -52,6 +55,7 @@ def library_view(request, username=None):
         albums = Album.objects.filter(published='PUBLIC').all()
 
         context = {
+            'profile': profile,
             'photos': photos,
             'albums': albums,
         }
