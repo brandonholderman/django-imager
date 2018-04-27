@@ -13,15 +13,22 @@
 
   {% for album in albums %}
   <table>
-    <thead>You're viewing the profile for {{ profile.user.username }}</thead>
+    <th>You're viewing the profile for {{ profile.user.username }}</th>
     <tr>
-      <td>{% trans "Last Login" %}: {{ profile.user.last_login }}</td>
+      <th>{% trans "Last Login" %}:</th> 
+        <td>{{ profile.user.last_login }}</td>
     </tr>
     <tr>
-      <td>{% trans "Member Since" %}: {{ profile.user.date_joined }}</td>
+      <th>{% trans "Member Since" %}:</th>
+        <td>{{ profile.user.date_joined }}</td>
     </tr>
     <tr>
+      <th>{% trans "Number of photos in album" %}:</th>
       <td>{{ album.name }} has {{ photos.count }}</td>
+    </tr>
+    <tr>
+      <th>{% trans "Number of albums" %}:</th>
+      <td>{{ albums.count }}</td>
     </tr>
     </tr>
   </table>
