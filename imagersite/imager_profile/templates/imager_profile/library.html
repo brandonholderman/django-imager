@@ -1,6 +1,6 @@
 {% extends "generic/base.html" %}
+
 {% load thumbnail %}
-{% load i18n %}
 
 {% block content %}
 {% if user.is_authenticated %}
@@ -9,11 +9,13 @@
   
         {% if photos %}
         {% for photo in photos %}
-        <img src="{{photo.image.url}}">
+         {% thumbnail photo.image "300" as image %}
+            <img src="{{image.url}}">
+
+         {% endthumbnail %}
         {% endfor %}
         {% endif %}
     
-  
         {% comment %} {% if album %}
         {% for item in album %}
             <h3>{{item.title}}</h3>

@@ -60,4 +60,4 @@ def library_view(request, username=None):
             'albums': albums,
         }
 
-    return render(request, 'imager_profile/library.html', context)
+        return render(request, 'imager_profile/library.html', context)
