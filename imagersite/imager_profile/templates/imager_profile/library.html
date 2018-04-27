@@ -1,0 +1,16 @@
+{% extends 'generic/base.html' %} 
+
+{% block content %}
+
+{% load thumbnail %}
+
+{% for album in albums %}
+
+{% thumbnail album.image "200x200" as img %}
+<img src="{{img.url}}">
+{% endthumbnail %}
+
+{% endfor %}
+
+<img src="{{photos.image.url}}" >{{ photos }}
+{% endblock %}
