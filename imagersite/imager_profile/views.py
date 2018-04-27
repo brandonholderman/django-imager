@@ -38,26 +38,14 @@ def settings_view(request, username=None):
 
 def library_view(request, username=None):
     # import pdb; pdb.set_trace()
-    owner = False
 
-    if not username:
-        username = request.user.get_username()
-        owner = True
-        if username == '':
-            return redirect('home')
+    photos = Photo.objects.filter(published='PUBLIC').all()
+    albums = Album.objects.filter(published='PUBLIC').all()
 
-    profile = get_object_or_404(ImagerProfile, user__username=username)
-    albums = Album.objects.filter(user__username=username)
-    photos = Photo.objects.filter(album__user__username=username)
+    context = {
 
-    if not owner:
-        photos = Photo.objects.filter(published='PUBLIC').all()
-        albums = Album.objects.filter(published='PUBLIC').all()
+        'photos': photos,
+        'albums': albums,
+    }
 
-        context = {
-            'profile': profile,
-            'photos': photos,
-            'albums': albums,
-        }
-
-        return render(request, 'imager_profile/library.html', context)
+    return render(request, 'imager_profile/library.html', context)
