@@ -20,6 +20,7 @@ For developer use:
 This application utilizes the Django web framework and postgresql for its databse
 
 ## Change Log
+* 2018-04-26 = 2300 - created profile page, random home image, library and photo viewing pages
 * 2018-04-25 - 1700 - created album and photo models and extended testing.
 * 2018-04-24 - 1700 - created user models and initial css changes.
 * 2018-04-23 - 1700 - initial scaffold complete.
