@@ -9,17 +9,15 @@
   
         {% if photos %}
         {% for photo in photos %}
-        <img src="{{photo.image.url}}" class="library" alt="">
+        <img src="{{photo.image.url}}" class="library">
         {% endfor %}
         {% endif %}
     
   
         {% if album %}
         {% for item in album %}
-        <div class="library">
             <h3>{{item.title}}</h3>
-            <img class="library" src="{{item.cover.url}}" alt="">
-        </div>
+            <img class="library" src="{{item.cover.url}}">
         {% endfor %}
         {% endif %}
 
