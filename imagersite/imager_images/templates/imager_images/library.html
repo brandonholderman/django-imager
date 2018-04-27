@@ -12,7 +12,7 @@
 
     {% for album in albums %}
     <h3>{{album.title}}</h3>
-    {% thumbnail album.cover.image "300x300" as image %}
+    {% thumbnail album.cover_image.image "300x300" as image %}
     <img src="{{ image.url }}">
     {% empty %}
     <img src="{% static 'placeholder.jpg' %}">

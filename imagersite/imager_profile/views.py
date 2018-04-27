@@ -35,21 +35,3 @@ def settings_view(request, username=None):
     context = {}
 
     return render(request, 'imager_profile/profile.html', context)
-
-
-def library_view(request, username=None):
-    """Renders library view"""
-    # import pdb; pdb.set_trace()
-
-    profile = get_object_or_404(ImagerProfile, user__username=username)
-
-    photos = Photo.objects.filter(published='PUBLIC').all()
-    albums = Album.objects.filter(published='PUBLIC').all()
-
-    context = {
-        'profile': profile,
-        'photos': photos,
-        'albums': albums,
-    }
-
-    return render(request, 'imager_profile/library.html', context)

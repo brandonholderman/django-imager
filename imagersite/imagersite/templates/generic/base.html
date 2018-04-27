@@ -16,15 +16,20 @@
 <body>
     <header>
         <div id="site-title">
-            <h1>Imager</h1>
+            <h1>
+                <a href="{% url 'home' %}">
+                    Imager
+                </a>
+            </h1>    
         </div>
         <nav>
             <ul>
                 <li><a href="{% url 'home' %}">Home</a></li>
                 {% if user.is_authenticated %}
                 <li><a href="{% url 'profile' %}">Profile</a></li>
-                <li><a href="{% url 'library' user.username %}">Library</a></li>
-                <li><a href="{% url 'home' %}">Albums</a></li>
+                <li><a href="{% url 'library' %}">Library</a></li>
+                <li><a href="{% url 'albums' %}">Albums</a></li>
+                <li><a href="{% url 'photos' %}">Photos</a></li>
                 {% if user.is_superuser %}
                 <li><a href="{% url 'admin:index' %}">Admin</a></li>
                 {% endif %}

@@ -1,0 +1,25 @@
+{% extends "generic/base.html" %}
+
+{% load thumbnail %}
+
+{% block content %}
+<h2>All Photos</h2>
+
+<div>
+    {% if photos %}
+    {% for photo in photos %}
+    {% thumbnail photo.image "300x200" as image %}
+    <img src="{{image.url}}">
+    {% comment %} <a href="{% url 'photo_detail' %}">Link to pic details
+
+    </a> {% endcomment %}
+    <p>{{photo.title}}</p>
+    
+    {% endthumbnail %}
+    {% endfor %}
+    {% else %}
+    <h2>Looks like we're all out of photos!</h2>
+    {% endif %}
+</div>  
+
+{% endblock content %}
