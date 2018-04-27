@@ -1,0 +1,50 @@
+{% extends "generic/base.html" %}
+
+{% load thumbnail %}
+{% load i18n %}
+
+{% block content %}
+{% if user.is_authenticated %}
+<section class="profile-container container">
+  {% if user.first_name %}
+  <h3>{% trans "Welcome" %} {{ user.username }}</h3>
+  {% endif %}
+
+
+  {% for album in albums %}
+  <table>
+    <th>You're viewing the profile for {{ profile.user.username }}</th>
+    <tr>
+      <th>{% trans "Last Login" %}:</th> 
+        <td>{{ profile.user.last_login }}</td>
+    </tr>
+    <tr>
+      <th>{% trans "Member Since" %}:</th>
+        <td>{{ profile.user.date_joined }}</td>
+    </tr>
+    <tr>
+      <th>{% trans "Number of photos in album" %}:</th>
+      <td>{{ album.name }} has {{ photos.count }}</td>
+    </tr>
+    <tr>
+      <th>{% trans "Number of albums" %}:</th>
+      <td>{{ albums.count }}</td>
+    </tr>
+    </tr>
+  </table>
+  {% endfor %}
+
+  {% comment %} <section class="profile-info">
+    <h2>Profile Information</h2>
+    {% if profile.user.username == user.username %}
+    <a href="{% url 'settings' username=user.username %}">{% trans "Edit Profile" %}</a>
+    {% endif %}
+  </section> {% endcomment %}
+
+  <!-- Handle the Product and Photo context that was passed from the view -->
+
+</section>
+{% else %}
+<h1>{% trans "Please log into the site" %}</h1>
+{% endif %}
+{% endblock content %}

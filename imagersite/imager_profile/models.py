@@ -1,6 +1,7 @@
 from django.db import models
 from multiselectfield import MultiSelectField
 from django.contrib.auth.models import User
+from django.dispatch import receiver
 
 
 class ImagerProfile(models.Model):
@@ -42,3 +43,10 @@ class ImagerProfile(models.Model):
     def active(cls):
         """Return all active profile instances"""
         return cls.objects.filter(is_active=True)
+
+
+@receiver(models.signals.post_save, sender=User)
+def create_profile(sender, **kwargs):
+    if kwargs['created']:
+        profile = ImagerProfile(user=kwargs['instance'])
+        profile.save()

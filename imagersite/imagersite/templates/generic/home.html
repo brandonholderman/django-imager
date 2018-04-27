@@ -3,5 +3,8 @@
 {% block content %}
 
 <p>{{ message }}</p>
-<img src="../../static/4_Ornitography_34.jpg">
+
+{{ photos }}
+<img src="{{photos.image.url}}">
+
 {% endblock %}

@@ -13,6 +13,7 @@ class UserFactory(factory.django.DjangoModelFactory):
     username = factory.Faker('user_name')
     email = factory.Faker('email')
 
+
 class ProfileFactory(factory.django.DjangoModelFactory):
     """ defines a mock profile instance for testing """
     class Meta:
@@ -78,7 +79,6 @@ class ProfileUnitTests(TestCase):
 
             photo = PhotoFactory.create(album=album)
             photo.save()
-
 
     @classmethod
     def tearDownClass(cls):
