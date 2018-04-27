@@ -8,26 +8,28 @@
 {% if user.is_authenticated %}
 
   <h3>Library of {{ profile.user.username }}</h3>
+<div>
 
+    {% for album in albums %}
+    <h3>{{album.title}}</h3>
+    {% thumbnail album.cover.image "300x300" as image %}
+    <img src="{{ image.url }}">
+    {% empty %}
+    <img src="{% static 'placeholder.jpg' %}">
+    {% endthumbnail %}
+    {% endfor %}
+</div>
 
-        {% for album in albums %}
-            <h3>{{album.title}}</h3>
-        {% thumbnail album.cover.image "300x300" as image %}
-            <img src="{{ image.url }}">
-        {% empty %}
-            <img src="{% static 'placeholder.jpg' %}">
-        {% endthumbnail %}
-        {% endfor %}
-  
-        {% if photos %}
-        {% for photo in photos %}
-         {% thumbnail photo.image "300x200" as image %}
-            <img src="{{image.url}}">
-
-         {% endthumbnail %}
-        {% endfor %}
-        {% endif %}
-
+<div>
+    {% if photos %}
+    {% for photo in photos %}
+    {% thumbnail photo.image "300x200" as image %}
+    <img src="{{image.url}}">
+    
+    {% endthumbnail %}
+    {% endfor %}
+    {% endif %}
+</div>  
 
 {% endif %}
 {% endblock content %}

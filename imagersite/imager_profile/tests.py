@@ -29,7 +29,6 @@ class UserFactory(factory.django.DjangoModelFactory):
 #     services = 'landscape'
 #     photostyles = 'night'
 
-
     def populate_profile(user, **kwargs):
         """Create profile for user class."""
         user.profile.bio = kwargs['bio'] if 'bio' in kwargs else factory.Faker('sentence')

@@ -4,6 +4,7 @@ from random import choice
 
 
 def home_view(request):
+    """Renders home view"""
     photos = Photo.objects.filter(published='PUBLIC').all()
     # import pdb; pdb.set_trace()
     if len(photos) > 0:
