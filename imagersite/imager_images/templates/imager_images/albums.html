@@ -9,7 +9,9 @@
     {% if albums %}
     {% for album in albums %}
     {% thumbnail album.cover_image.image "300x200" as image %}
-    <img src="{{image.url}}">
+    <a href="{% url 'album_detail' id=album.id %}">
+        <img src="{{image.url}}">
+    </a>
     <p>{{album.name}}</p>
     {% endthumbnail %}
     {% endfor %}

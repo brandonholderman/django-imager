@@ -9,10 +9,9 @@
     {% if photos %}
     {% for photo in photos %}
     {% thumbnail photo.image "300x200" as image %}
-    <img src="{{image.url}}">
-    {% comment %} <a href="{% url 'photo_detail' %}">Link to pic details
-
-    </a> {% endcomment %}
+    <a href="{% url 'photo_detail' id=photo.id %}">
+        <img src="{{image.url}}">
+    </a>
     <p>{{photo.title}}</p>
     
     {% endthumbnail %}
