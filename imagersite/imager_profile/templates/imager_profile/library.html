@@ -9,17 +9,17 @@
   
         {% if photos %}
         {% for photo in photos %}
-        <img src="{{photo.image.url}}" class="library">
+        <img src="{{photo.image.url}}">
         {% endfor %}
         {% endif %}
     
   
-        {% if album %}
+        {% comment %} {% if album %}
         {% for item in album %}
             <h3>{{item.title}}</h3>
             <img class="library" src="{{item.cover.url}}">
         {% endfor %}
-        {% endif %}
+        {% endif %} {% endcomment %}
 
 {% endif %}
 {% endblock content %}

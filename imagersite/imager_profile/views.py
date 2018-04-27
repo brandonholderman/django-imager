@@ -45,7 +45,7 @@ def library_view(request, username=None):
         owner = True
         if username == '':
             return redirect('home')
-    
+
     profile = get_object_or_404(ImagerProfile, user__username=username)
     albums = Album.objects.filter(user__username=username)
     photos = Photo.objects.filter(album__user__username=username)
