@@ -1,10 +1,14 @@
 {% extends 'generic/base.html' %} 
+{% load thumbnail %}
+{% load static %}
 
 {% block content %}
 
 <p>{{ message }}</p>
 
-{{ photos }}
-<img src="{{photos.image.url}}">
-
+{% thumbnail photos.image "500x500" as image %}
+<img src="{{image.url}}">
+{% empty %}
+<img src="{% static 'placeholder.jpeg' %}">
+{% endthumbnail %}
 {% endblock %}

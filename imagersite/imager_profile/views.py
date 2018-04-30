@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from imager_images.models import Album, Photo
-from sorl.thumbnail import ImageField
 from .models import ImagerProfile
 
 
 def profile_view(request, username=None):
+    """Renders profile view"""
     owner = False
 
     if not username:
@@ -31,21 +31,7 @@ def profile_view(request, username=None):
 
 
 def settings_view(request, username=None):
+    """Renders settings view"""
     context = {}
 
     return render(request, 'imager_profile/profile.html', context)
-
-
-def library_view(request, username=None):
-    # import pdb; pdb.set_trace()
-
-    photos = Photo.objects.filter(published='PUBLIC').all()
-    albums = Album.objects.filter(published='PUBLIC').all()
-
-    context = {
-
-        'photos': photos,
-        'albums': albums,
-    }
-
-    return render(request, 'imager_profile/library.html', context)

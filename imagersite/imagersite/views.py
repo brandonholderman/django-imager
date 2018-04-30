@@ -4,16 +4,16 @@ from random import choice
 
 
 def home_view(request):
-    photos = Photo.objects.filter(published='PUBLIC').all()
+    """Renders home view"""
+    photos = Photo.objects.filter(published='PUBLIC')
     # import pdb; pdb.set_trace()
-    if len(photos) > 0:
-        rand_pick = choice(photos)
-        pic_path = rand_pick.image.url
+    if len(photos) < 1:
+        rand_pic = None
     else:
-        pic_path = '/static/4_Ornitography_34.jpg'
+        rand_pic = choice(photos)
 
     context = {
-        'photos': pic_path
+        'photos': rand_pic
     }
 
     return render(request, 'generic/home.html', context)

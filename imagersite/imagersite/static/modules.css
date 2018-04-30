@@ -26,6 +26,10 @@ header #site-title {
 header h1 {
     font-size: 2em;
 }
+header h1 a {
+    text-decoration: none;
+    color: white;
+}
 
 header h3 {
     float: right;

@@ -1,5 +1,6 @@
 from django.test import TestCase
-from .models import Album, Photo, User
+from imager_images.models import Album, Photo
+from imager_profile.models import User
 from imager_profile.models import ImagerProfile
 import factory
 import random
@@ -14,21 +15,21 @@ class UserFactory(factory.django.DjangoModelFactory):
     email = factory.Faker('email')
 
 
-class ProfileFactory(factory.django.DjangoModelFactory):
-    """ defines a mock profile instance for testing """
-    class Meta:
-        model = ImagerProfile
+# class ProfileFactory(factory.django.DjangoModelFactory):
+#     """ defines a mock profile instance for testing """
+#     class Meta:
+#         model = ImagerProfile
 
-    bio = '''Tandon Holderbone was a pioneer of sorts only
-    indulging in the finest things life has to offer...'''
-    phone = factory.Faker('phone_number')
-    location = factory.Faker('state_abbr')
-    website = factory.Faker('domain_name')
-    fee = round(random.uniform(0, 100), 2)
-    is_active = factory.Faker('boolean')
-    camera = 'DSLR'
-    services = 'landscape'
-    photostyles = 'night'
+#     bio = '''Tandon Holderbone was a pioneer of sorts only
+#     indulging in the finest things life has to offer...'''
+#     phone = factory.Faker('phone_number')
+#     location = factory.Faker('state_abbr')
+#     website = factory.Faker('domain_name')
+#     fee = round(random.uniform(0, 100), 2)
+#     is_active = factory.Faker('boolean')
+#     camera = 'DSLR'
+#     services = 'landscape'
+#     photostyles = 'night'
 
 
 class AlbumFactory(factory.django.DjangoModelFactory):
@@ -71,8 +72,8 @@ class ProfileUnitTests(TestCase):
             user.set_password(factory.Faker('password'))
             user.save()
 
-            profile = ProfileFactory.create(user=user)
-            profile.save()
+            # profile = ProfileFactory.create(user=user)
+            # profile.save()
 
             album = AlbumFactory.create(user=user)
             album.save()
