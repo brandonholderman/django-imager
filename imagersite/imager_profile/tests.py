@@ -1,5 +1,6 @@
 from django.test import TestCase
 from .models import ImagerProfile, User
+from faker import Faker
 import factory
 import random
 
@@ -29,17 +30,18 @@ class UserFactory(factory.django.DjangoModelFactory):
 #     services = 'landscape'
 #     photostyles = 'night'
 
-    def populate_profile(user, **kwargs):
-        """Create profile for user class."""
-        user.profile.bio = kwargs['bio'] if 'bio' in kwargs else factory.Faker('sentence')
-        user.profile.phone = kwargs['phone'] if 'phone' in kwargs else factory.Faker('phone_number')
-        user.profile.location = kwargs['location'] if 'location' in kwargs else factory.Faker('state_abbr')
-        user.profile.website = kwargs['website'] if 'website' in kwargs else factory.Faker('domain_name')
-        user.profile.fee = kwargs['fee'] if 'fee' in kwargs else round(random.uniform(0, 100), 2)
-        user.profile.is_active = kwargs['is_active'] if 'is_active' in kwargs else factory.Faker('boolean')
-        user.profile.camera = kwargs['camera'] if 'camera' in kwargs else 'DSLR'
-        user.profile.services = kwargs['services'] if 'services' in kwargs else factory.Faker('job')
-        user.profile.photostyles = kwargs['photostyles'] if 'photostyles' in kwargs else 'night'
+def populate_profile(user):
+    """Create profile for user class."""
+    fake = Faker()
+    user.profile.bio = fake.sentence()
+    user.profile.phone = fake.phone_number()
+    user.profile.location = fake.state_abbr()
+    user.profile.website = fake.domain_name()
+    user.profile.fee = round(random.uniform(0, 100), 2)
+    user.profile.is_active = fake.boolean()
+    user.profile.camera = 'DSLR'
+    user.profile.services = 'weddings'
+    user.profile.photostyles = 'night'
 
 
 class ProfileUnitTests(TestCase):
@@ -55,8 +57,9 @@ class ProfileUnitTests(TestCase):
             user.set_password(factory.Faker('password'))
             user.save()
 
-            # profile = ProfileFactory.create(user=user)
-            # profile.save()
+            # import pdb; pdb.set_trace()
+            # populate_profile(user)
+            # user.profile.save()
 
     @classmethod
     def tearDownClass(cls):

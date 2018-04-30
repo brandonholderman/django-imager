@@ -9,6 +9,6 @@
 {% thumbnail photos.image "500x500" as image %}
 <img src="{{image.url}}">
 {% empty %}
-<img src="{% static 'placeholder.jpg' %}">
+<img src="{% static 'placeholder.jpeg' %}">
 {% endthumbnail %}
 {% endblock %}
