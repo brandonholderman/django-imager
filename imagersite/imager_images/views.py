@@ -6,7 +6,8 @@ from imager_profile.models import ImagerProfile
 def library_view(request, username=None):
     """Render library view."""
 
-    profile = get_object_or_404(ImagerProfile, user__username=request.user.username)
+    profile = get_object_or_404(ImagerProfile,
+                                user__username=request.user.username)
 
     photos = Photo.objects.filter(published='PUBLIC').all()
     albums = Album.objects.filter(published='PUBLIC').all()
@@ -17,22 +18,19 @@ def library_view(request, username=None):
         'albums': albums,
     }
 
-    # import pdb; pdb.set_trace()
     return render(request, 'imager_images/library.html', context)
 
 
 def photo_view(request, username=None):
     """Render photo view."""
-    
+
     photos = Photo.objects.filter(published='PUBLIC').all()
 
     context = {
         'photos': photos,
     }
 
-    # import pdb; pdb.set_trace()
     return render(request, 'imager_images/photos.html', context)
-
 
 
 def album_view(request, username=None):
@@ -43,7 +41,6 @@ def album_view(request, username=None):
         'albums': albums,
     }
 
-    # import pdb; pdb.set_trace()
     return render(request, 'imager_images/albums.html', context)
 
 
@@ -64,6 +61,8 @@ def album_detail_view(request, id=None):
 
 def photo_detail_view(request, id=None):
     """Render photo_detail view."""
+    # if not request.user.is_authenticated:
+    #     return redirect('photos')
 
     if not id:
         return redirect('photos')
