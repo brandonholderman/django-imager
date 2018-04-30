@@ -41,7 +41,6 @@ class ProfileUnitTests(TestCase):
             user.set_password(factory.Faker('password'))
             user.save()
 
-            # import pdb; pdb.set_trace()
             # populate_profile(user)
             # user.profile.save()
 
