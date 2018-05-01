@@ -3,7 +3,7 @@
 **Author**: Tyler Fishbone and Brandon Holderman
 **Version**: 0.0.3
 
-[![Coverage Status](https://coveralls.io/repos/github/brandonholderman/django-imager/badge.svg?branch=class-31-testing)](https://coveralls.io/github/brandonholderman/django-imager?branch=class-31-testing)
+[![Coverage Status](https://coveralls.io/repos/github/brandonholderman/django-imager/badge.svg?branch=master)](https://coveralls.io/github/brandonholderman/django-imager?branch=master)
 
 ## Overview
 This website will be an imgur analog, made to for use in learning how to use the Django web framework.
