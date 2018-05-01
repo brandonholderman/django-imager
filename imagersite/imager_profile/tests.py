@@ -63,92 +63,41 @@ class ProfileUnitTests(TestCase):
         one_user = User.objects.all()[0]
         self.assertIsNotNone(one_user.profile)
 
-    # def test_profile_has_bio(self):
-    #     one_user = User.objects.all()[0]
-    #     self.assertIsNotNone(one_user.profile.bio)
-
-    # def test_profile_has_phone(self):
-    #     one_user = User.objects.all()[0]
-    #     self.assertIsNotNone(one_user.profile.phone)
-
-    # def test_profile_has_location(self):
-    #     one_user = User.objects.all()[0]
-    #     self.assertIsNotNone(one_user.profile.location)
-
-    # def test_profile_has_website(self):
-    #     one_user = User.objects.all()[0]
-    #     self.assertIsNotNone(one_user.profile.website)
-
-    # def test_profile_has_fee(self):
-    #     one_user = User.objects.all()[0]
-    #     self.assertIsNotNone(one_user.profile.fee)
-
-    # def test_profile_has_is_active(self):
-    #     one_user = User.objects.all()[0]
-    #     self.assertIsNotNone(one_user.profile.is_active)
-
-    # def test_profile_has_camera(self):
-    #     one_user = User.objects.all()[0]
-    #     self.assertIsNotNone(one_user.profile.camera)
-
-    # def test_profile_has_services(self):
-    #     one_user = User.objects.all()[0]
-    #     self.assertIsNotNone(one_user.profile.services)
-
-    # def test_profile_has_photostyles(self):
-    #     one_user = User.objects.all()[0]
-    #     self.assertIsNotNone(one_user.profile.photostyles)
-
-    # def test_profile_is_created_when_user_is_updated(self):
-    #     """Test profile created when user is updated."""
-    #     self.assertEquals(ImagerProfile.objects.count(), 50)
-    #     one_user = User.objects.last()
-    #     one_user.username = 'TandonHolderbone'
-    #     one_user.save()
-    #     self.assertEquals(ImagerProfile.objects.count(), 50)
-
-    # def test_all_items_in_active(self):
-    #     """Test that active method gets all active profiles."""
-    #     one_user = User.objects.last()
-    #     one_user.is_active = False
-    #     one_user.save()
-
-    #     active_profiles = ImagerProfile.active
-    #     all_profiles = ImagerProfile.objects.all()
-    #     self.assertEquals(active_profiles.count(), all_profiles.count() - 1)
-
 
 class ProfileRouteTests(TestCase):
+    """Instantiates two mock users"""
     def setUp(self):
         self.request = RequestFactory()
-        user_one = UserFactory(username='gandalf', email='wizard@middle.earth')
+        user_one = UserFactory(username='brandon', email='brandon@brandon.brandon')
         user_one.set_password('password')
         user_one.save()
 
         populate_profile(user_one)
         user_one.profile.save()
 
-        user_two = UserFactory(username='bilbo', email='hobbit@middle.earth')
+        user_two = UserFactory(username='tyler', email='tyler@tyler.tyler')
         user_two.set_password('password')
         user_two.save()
 
         populate_profile(user_two)
         user_two.profile.save()
 
-        self.gandalf = user_one
-        self.bilbo = user_two
+        self.brandon = user_one
+        self.tyler = user_two
 
     def tearDown(self):
         User.objects.all().delete()
 
     def test_profile_view_shows_please_login_when_unauthenticated(self):
+        """test profile view shows please login when unauthenticated"""
         from .views import profile_view
         request = self.request.get('/profile/')
         request.user = AnonymousUser()
-        response = profile_view(request, 'gandalf')
+        response = profile_view(request, 'brandon')
         self.assertIn(b'Please log into the site', response.content)
 
     def test_profile_view_with_no_user_name_not_logged_in_redirets_home(self):
+        """test profile view with no user name not logged in redirets home"""
         from .views import profile_view
         request = self.request.get('/profile/')
         request.user = AnonymousUser()
@@ -156,44 +105,43 @@ class ProfileRouteTests(TestCase):
         self.assertEqual(response.status_code, 302)
 
     def test_profile_view_with_bad_user_returns_404(self):
+        """test profile view with bad user returns 404"""
         from .views import profile_view
         request = self.request.get('/profile/')
         request.user = AnonymousUser()
         with self.assertRaises(Http404):
-            profile_view(request, 'Bilbo')
+            profile_view(request, 'Tyler')
 
     def test_profile_route_has_200_response_given_an_authenticated_user(self):
+        """test profile route has 200 response given an authenticated user"""
         c = Client()
-        c.login(username=self.gandalf.username, password='password')
+        c.login(username=self.brandon.username, password='password')
         response = c.get('/profile/')
         self.assertEqual(response.status_code, 200)
 
     def test_profile_route_has_user_info(self):
+        """test profile route has user info"""
         c = Client()
-        c.login(username=self.gandalf.username, password='password')
+        c.login(username=self.brandon.username, password='password')
         response = c.get('/profile/')
         self.assertEqual(
-            response.context['user'].username, self.gandalf.username)
+            response.context['user'].username, self.brandon.username)
 
     def test_profile_route_does_not_allow_editing_for_other_users(self):
+        """test profile route does not allow editing for other users"""
         c = Client()
-        c.login(username=self.gandalf.username, password='password')
-        response = c.get('/profile/bilbo')
+        c.login(username=self.brandon.username, password='password')
+        response = c.get('/profile/tyler')
         self.assertNotIn(b'Edit Profile', response.content)
 
-    # def test_profile_route_does_allow_editing_for_signed_in_users(self):
-    #     c = Client()
-    #     c.login(username=self.gandalf.username, password='password')
-    #     response = c.get('/profile/gandalf')
-    #     self.assertIn(b'Edit Profile', response.content)
-
     def test_profile_route_returns_404_if_user_does_not_exist(self):
+        """test_profile_route_returns_404_if_user_does_not_exist"""
         c = Client()
         response = c.get('/profile/does_not_exist')
         self.assertEqual(response.status_code, 404)
 
     def test_profile_route_redirects_if_not_logged_in(self):
-        """Test profiel route redirects if not logged in."""
+        """Test profile route redirects if not logged in."""
         c = Client()
         response = c.get('/profile/')
         self.assertEqual(response.status_code, 302)
