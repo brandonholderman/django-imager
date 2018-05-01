@@ -1,4 +1,5 @@
 from django.test import TestCase
+from django.test import Client
 from imager_profile.models import User
 from ..models import Album, Photo
 from model_mommy import mommy
@@ -99,3 +100,9 @@ class TestLibraryRoutes(TestCase):
         """Test 404 status on a bad request."""
         response = self.client.get('/images/albums/doesnotexist')
         self.assertEqual(response.status_code, 404)
+
+    def test_home_view_with_random_image_from_db(self):
+        """tests successful retrieval of home view"""
+        c = Client()
+        reponse = c.get('/')
+        self.assertEqual(reponse.status_code, 200)
