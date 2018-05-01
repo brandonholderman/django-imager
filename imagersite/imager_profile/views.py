@@ -28,10 +28,3 @@ def profile_view(request, username=None):
     }
 
     return render(request, 'imager_profile/profile.html', context)
-
-
-def settings_view(request, username=None):
-    """Renders settings view"""
-    context = {}
-
-    return render(request, 'imager_profile/profile.html', context)
