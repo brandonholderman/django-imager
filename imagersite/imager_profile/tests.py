@@ -1,5 +1,5 @@
 from django.test import TestCase
-from .models import ImagerProfile, User
+from .models import User
 from faker import Faker
 import factory
 import random
