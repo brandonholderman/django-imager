@@ -1,9 +1,9 @@
-from django.test import TestCase
-from django.test import Client
+from django.test import TestCase, Client
 from imager_profile.models import User
 from ..models import Album, Photo
 from model_mommy import mommy
 import tempfile
+# from django.urls import reverse
 
 
 class TestLibraryRoutes(TestCase):
@@ -25,6 +25,17 @@ class TestLibraryRoutes(TestCase):
     def tearDownClass(cls):
         User.objects.all().delete()
         super(TestCase, cls)
+
+    ## I blieve this test is unnecessary because the line it tests is 
+    ##basically unreachable
+    # def test_302_status_on_unspecified_repsonse_to_album_detail(self):
+    #     """Test 302 response on unspecified album detail view."""
+    #     user = User.objects.first()
+    #     self.client.force_login(user)
+    #     url = reverse('album_detail')
+    #     response = self.client.get(url)
+    #     self.client.logout()
+    #     self.assertEqual(response.status_code, 302)
 
     def test_200_status_on_authenticated_request_to_library(self):
         """Test 200 status on aunthenticated response to library."""

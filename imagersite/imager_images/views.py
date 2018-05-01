@@ -60,8 +60,8 @@ def album_detail_view(request, id=None):
     if not request.user.is_authenticated:
         return redirect('home')
 
-    if not id:
-        return redirect('albums')
+    # if not id:
+    #     return redirect('albums')
 
     album_single = Album.objects.filter(id=id).all()
 
@@ -78,8 +78,8 @@ def photo_detail_view(request, id=None):
     if not request.user.is_authenticated:
         return redirect('home')
 
-    if not id:
-        return redirect('photos')
+    # if not id:
+    #     return redirect('photos')
 
     photo_single = Photo.objects.filter(id=id).all()
 
