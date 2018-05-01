@@ -1,8 +1,7 @@
 [run]
-branch = True
 
 omit =
-    */ENV/*
+    */env/*
     */migrations/*
     */test/*
     */admin.py
