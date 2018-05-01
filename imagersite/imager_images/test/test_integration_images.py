@@ -26,6 +26,20 @@ class TestLibraryRoutes(TestCase):
         User.objects.all().delete()
         super(TestCase, cls)
 
+    def test_str_method_on_album(self):
+        """Test string method on album."""
+        user = User.objects.first()
+        one_album = Album.objects.first()
+        # import pdb; pdb.set_trace()
+        self.assertEqual(str(one_album), 'Untitled')
+
+    def test_str_method_on_photo(self):
+        """Test string method on photo."""
+        # user = User.objects.first()
+        one_photo = Photo.objects.first()
+        # import pdb; pdb.set_trace()
+        self.assertEqual(str(one_photo), 'Untitled')
+
     ## I blieve this test is unnecessary because the line it tests is 
     ##basically unreachable
     # def test_302_status_on_unspecified_repsonse_to_album_detail(self):
@@ -40,7 +54,6 @@ class TestLibraryRoutes(TestCase):
     def test_200_status_on_authenticated_request_to_library(self):
         """Test 200 status on aunthenticated response to library."""
         user = User.objects.first()
-
         self.client.force_login(user)
         response = self.client.get('/images/library/')
         self.client.logout()

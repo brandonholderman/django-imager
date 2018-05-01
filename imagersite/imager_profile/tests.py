@@ -202,3 +202,10 @@ class ProfileRouteTests(TestCase):
         """Test active class method."""
         all_active = ImagerProfile.active()
         self.assertIsNotNone(all_active)
+    
+    def test_str_method_on_username(self):
+        """Test string method on album."""
+        one_profile = ImagerProfile.objects.first()
+        one_profile.user.username = 'papa doc'
+        # import pdb; pdb.set_trace()
+        self.assertEqual(str(one_profile), 'papa doc')
