@@ -6,7 +6,7 @@ import random
 
 
 class UserFactory(factory.django.DjangoModelFactory):
-    """ defines a mock user instance for testing """
+    """ Defines a mock user instance for testing """
     class Meta:
         model = User
 
@@ -30,7 +30,7 @@ def populate_profile(user):
 
 class ProfileUnitTests(TestCase):
     """
-    utlitizes the above classes to generate instances of
+    Utlitizes the above classes to generate instances of
     user/profiles for use in testing
     """
     @classmethod
@@ -41,8 +41,8 @@ class ProfileUnitTests(TestCase):
             user.set_password(factory.Faker('password'))
             user.save()
 
-            # populate_profile(user)
-            # user.profile.save()
+            populate_profile(user)
+            user.profile.save()
 
     @classmethod
     def tearDownClass(cls):
@@ -50,5 +50,47 @@ class ProfileUnitTests(TestCase):
         User.objects.all().delete()
 
     def test_user_can_see_its_profle(self):
+        """Test user can see profile."""
         one_user = User.objects.first()
         self.assertIsNotNone(one_user.profile)
+
+    def test_user_can_point_to_its_profile(self):
+        """Test user can point to it's profile."""
+        one_user = User.objects.all()[0]
+        self.assertIsNotNone(one_user.profile)
+
+    def test_profile_has_bio(self):
+        one_user = User.objects.all()[0]
+        self.assertIsNotNone(one_user.profile.bio)
+
+    def test_profile_has_phone(self):
+        one_user = User.objects.all()[0]
+        self.assertIsNotNone(one_user.profile.phone)
+
+    def test_profile_has_location(self):
+        one_user = User.objects.all()[0]
+        self.assertIsNotNone(one_user.profile.location)
+
+    def test_profile_has_website(self):
+        one_user = User.objects.all()[0]
+        self.assertIsNotNone(one_user.profile.website)
+
+    def test_profile_has_fee(self):
+        one_user = User.objects.all()[0]
+        self.assertIsNotNone(one_user.profile.fee)
+
+    def test_profile_has_is_active(self):
+        one_user = User.objects.all()[0]
+        self.assertIsNotNone(one_user.profile.is_active)
+
+    def test_profile_has_camera(self):
+        one_user = User.objects.all()[0]
+        self.assertIsNotNone(one_user.profile.camera)
+
+    def test_profile_has_services(self):
+        one_user = User.objects.all()[0]
+        self.assertIsNotNone(one_user.profile.services)
+
+    def test_profile_has_photostyles(self):
+        one_user = User.objects.all()[0]
+        self.assertIsNotNone(one_user.profile.photostyles)
