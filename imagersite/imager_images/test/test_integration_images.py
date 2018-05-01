@@ -33,3 +33,37 @@ class TestLibraryRoutes(TestCase):
         response = self.client.get('/images/library/')
         self.client.logout()
         self.assertEqual(response.status_code, 200)
+    
+    def test_200_status_on_authenticated_repsonse_to_album(self):
+        """Test 200 status on authenticated repsonse to album."""
+        user = User.objects.first()
+        album = Album.objects.first()
+        self.client.force_login(user)
+        response = self.client.get('/images/albums/{}'.format(album.id))
+        self.client.logout()
+        self.assertEqual(response.status_code, 200)
+
+    def test_200_status_on_authenticated_repsonse_to_photo(self):
+        """Test 200 status on authenticated repsonse to photo."""
+        user = User.objects.first()
+        photo = Photo.objects.first()
+        self.client.force_login(user)
+        response = self.client.get('/images/photos/{}'.format(photo.id))
+        self.client.logout()
+        self.assertEqual(response.status_code, 200)
+
+    def test_302_status_on_unauthenticated_repsonse_to_album(self):
+        """Test 302 status on authenticated repsonse to album."""
+        response = self.client.get('/images/albums/')
+        self.assertEqual(response.status_code, 302)
+
+    def test_302_status_on_unauthenticated_repsonse_to_photo(self):
+        """Test 302 status on authenticated repsonse to photo."""
+        response = self.client.get('/images/photos/')
+        self.assertEqual(response.status_code, 302)
+
+    def test_404_for_a_bad_request_to_album(self):
+        """Test 404 status on a bad request."""
+        response = self.client.get('/images/albums/doesnotexist')
+        self.assertEqual(response.status_code, 404)
+
