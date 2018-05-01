@@ -193,6 +193,12 @@ class ProfileRouteTests(TestCase):
         self.assertEqual(response.status_code, 404)
 
     def test_profile_route_redirects_if_not_logged_in(self):
+        """Test profiel route redirects if not logged in."""
         c = Client()
         response = c.get('/profile/')
         self.assertEqual(response.status_code, 302)
+    
+    def test_active_class_method(self):
+        """Test active class method."""
+        all_active = ImagerProfile.active()
+        self.assertIsNotNone(all_active)
