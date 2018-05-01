@@ -61,8 +61,6 @@ def album_detail_view(request, id=None):
 
 def photo_detail_view(request, id=None):
     """Render photo_detail view."""
-    # if not request.user.is_authenticated:
-    #     return redirect('photos')
 
     if not id:
         return redirect('photos')
