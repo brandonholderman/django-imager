@@ -4,26 +4,6 @@ from imager_profile.models import ImagerProfile
 from django.views.generic import ListView
 
 
-# def library_view(request, username=None):
-#     """Render library view."""
-
-#     if not request.user.is_authenticated:
-#         return redirect('home')
-
-#     profile = get_object_or_404(ImagerProfile,
-#                                 user__username=request.user.username)
-
-#     photos = Photo.objects.filter(published='PUBLIC').all()
-#     albums = Album.objects.filter(published='PUBLIC').all()
-
-#     context = {
-#         'profile': profile,
-#         'photos': photos,
-#         'albums': albums,
-#     }
-
-#     return render(request, 'imager_images/library.html', context)
-
 class LibraryView(ListView):
     template_name = 'imager_images/library.html'
     context_object_name = 'library'
@@ -81,9 +61,9 @@ class AlbumView(ListView):
     def get(self, *args, **kwargs):
         if not self.request.user.is_authenticated:
             return redirect('home')
-        
+
         return super().get(*args, **kwargs)
-    
+
     def get_queryset(self):
         return Album.objects.filter(published='PUBLIC')
 
