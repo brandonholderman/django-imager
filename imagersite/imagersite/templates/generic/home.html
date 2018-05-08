@@ -4,11 +4,16 @@
 
 {% block content %}
 
-<p>{{ message }}</p>
 
-{% thumbnail photos.image "500x500" as image %}
-<img src="{{image.url}}">
-{% empty %}
-<img src="{% static 'placeholder.jpeg' %}">
+{% if image %}
+{% thumbnail image.image "500x500" as image %}
+<img src="{{ image.url }}">
+<h2>{{ image_title }}</h2>
 {% endthumbnail %}
+{% else %}
+<img src="{{ image_url }}" width="500px">
+<h2>{{ image_title }}</h2>
+{% endif %}
+
+
 {% endblock %}

@@ -1,57 +1,96 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Photo, Album
 from imager_profile.models import ImagerProfile
+from django.views.generic import ListView
 
 
-def library_view(request, username=None):
-    """Render library view."""
+# def library_view(request, username=None):
+#     """Render library view."""
 
-    if not request.user.is_authenticated:
-        return redirect('home')
+#     if not request.user.is_authenticated:
+#         return redirect('home')
 
-    profile = get_object_or_404(ImagerProfile,
-                                user__username=request.user.username)
+#     profile = get_object_or_404(ImagerProfile,
+#                                 user__username=request.user.username)
 
-    photos = Photo.objects.filter(published='PUBLIC').all()
-    albums = Album.objects.filter(published='PUBLIC').all()
+#     photos = Photo.objects.filter(published='PUBLIC').all()
+#     albums = Album.objects.filter(published='PUBLIC').all()
 
-    context = {
-        'profile': profile,
-        'photos': photos,
-        'albums': albums,
-    }
+#     context = {
+#         'profile': profile,
+#         'photos': photos,
+#         'albums': albums,
+#     }
 
-    return render(request, 'imager_images/library.html', context)
+#     return render(request, 'imager_images/library.html', context)
+
+class LibraryView(ListView):
+    template_name = 'imager_images/library.html'
+    context_object_name = 'library'
+
+    def get(self, *args, **kwargs):
+        if not self.request.user.is_authenticated:
+            return redirect('home')
+
+        return super().get(*args, **kwargs)
+
+    def get_queryset(self, **kwargs):
+        photo_query = Photo.objects.filter(published='PUBLIC')
+        album_query = Album.objects.filter(published='PUBLIC')
+        profile_query = get_object_or_404(ImagerProfile, user__username=self.request.user.username)
+
+        return [photo_query, album_query, profile_query]
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['photos'] = context['library'][0]
+        context['albums'] = context['library'][1]
+        context['profile'] = context['library'][2]
+
+        return context
 
 
-def photo_view(request, username=None):
+class PhotoView(ListView):
     """Render photo view."""
+    template_name = 'imager_images/photos.html'
+    context_object_name = 'photos'
+    # queryset = Photo.objects.filter(published='PUBLIC')
 
-    if not request.user.is_authenticated:
-        return redirect('home')
+    def get(self, *args, **kwargs):
+        if not self.request.user.is_authenticated:
+            return redirect('home')
+        
+        return super().get(*args, **kwargs)
+    
+    def get_queryset(self):
+        
+        return Photo.objects.filter(published='PUBLIC')
 
-    photos = Photo.objects.filter(published='PUBLIC').all()
-
-    context = {
-        'photos': photos,
-    }
-
-    return render(request, 'imager_images/photos.html', context)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+    
+        return context
 
 
-def album_view(request, username=None):
+class AlbumView(ListView):
     """Render album view."""
+    template_name = 'imager_images/albums.html'
+    context_object_name = 'albums'
+    # queryset = album.objects.filter(published='PUBLIC')
 
-    if not request.user.is_authenticated:
-        return redirect('home')
+    def get(self, *args, **kwargs):
+        if not self.request.user.is_authenticated:
+            return redirect('home')
+        
+        return super().get(*args, **kwargs)
+    
+    def get_queryset(self):
+        return Album.objects.filter(published='PUBLIC')
 
-    albums = Album.objects.filter(published='PUBLIC').all()
-
-    context = {
-        'albums': albums,
-    }
-
-    return render(request, 'imager_images/albums.html', context)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+    
+        return context
 
 
 def album_detail_view(request, id=None):

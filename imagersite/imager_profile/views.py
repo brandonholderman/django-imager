@@ -3,6 +3,9 @@ from imager_images.models import Album, Photo
 from .models import ImagerProfile
 
 
+# class ProfileView(TemplateView)
+
+
 def profile_view(request, username=None):
     """Renders profile view"""
     owner = False
