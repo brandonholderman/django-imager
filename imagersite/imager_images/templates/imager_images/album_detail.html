@@ -4,9 +4,8 @@
 <h2>All Albums</h2>
 
 <div>
-    {% if albums %}
+    {% if album %}
     
-    {% for album in albums %}
     <img src="{{album.cover_image.image.url}}">
     <p>title: {{album.name}}</p>
     <p>description: {{album.description}}</p>
@@ -14,7 +13,7 @@
     <p>date_modified: {{album.date_modified}}</p>
     <p>date_published: {{album.date_published}}</p>
     <p>published: {{album.published}}</p>
-    {% endfor %}
+
     {% else %}
     <p>¡Alas! We don't have that album yet, but you can fill the void!</p>
     <p>Create an account with the link below and let's see what you got ;)</p>

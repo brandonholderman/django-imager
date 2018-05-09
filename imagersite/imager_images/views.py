@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Photo, Album
 from imager_profile.models import ImagerProfile
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 
 
 class LibraryView(ListView):
@@ -57,6 +57,7 @@ class AlbumView(ListView):
     template_name = 'imager_images/albums.html'
     context_object_name = 'albums'
     # queryset = album.objects.filter(published='PUBLIC')
+    
 
     def get(self, *args, **kwargs):
         if not self.request.user.is_authenticated:
@@ -73,37 +74,28 @@ class AlbumView(ListView):
         return context
 
 
-def album_detail_view(request, id=None):
-    """Render album_detail view."""
+class AlbumDetailView(DetailView):
+    """Render album detail view."""
+    template_name = 'imager_images/album_detail.html'
+    context_object_name = 'album'
+    model = Album
 
-    if not request.user.is_authenticated:
-        return redirect('home')
-
-    # if not id:
-    #     return redirect('albums')
-
-    album_single = Album.objects.filter(id=id).all()
-
-    context = {
-        'albums': album_single,
-    }
-
-    return render(request, 'imager_images/album_detail.html', context)
+    def get(self, *args, **kwargs):
+        if not self.request.user.is_authenticated:
+            return redirect('home')
+        
+        return super().get(*args, **kwargs)
 
 
-def photo_detail_view(request, id=None):
-    """Render photo_detail view."""
+class PhotoDetailView(DetailView):
+    """Render photo detail view."""
+    template_name = 'imager_images/photo_detail.html'
+    context_object_name = 'photo'
+    pk_url_kwarg = 'id'
+    model = Photo
 
-    if not request.user.is_authenticated:
-        return redirect('home')
-
-    # if not id:
-    #     return redirect('photos')
-
-    photo_single = Photo.objects.filter(id=id).all()
-
-    context = {
-        'photos': photo_single,
-    }
-
-    return render(request, 'imager_images/photo_detail.html', context)
+    def get(self, *args, **kwargs):
+        if not self.request.user.is_authenticated:
+            return redirect('home')
+        
+        return super().get(*args, **kwargs)

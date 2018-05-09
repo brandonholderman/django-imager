@@ -4,9 +4,7 @@
 <h2>All Photos</h2>
 
 <div>
-    {% if photos %}
-    
-    {% for photo in photos %}
+    {% if photo %}
     <img src="{{photo.image.url}}">
     <p>title: {{photo.title}}</p>
     <p>description: {{photo.description}}</p>
@@ -14,7 +12,7 @@
     <p>date_modified: {{photo.date_modified}}</p>
     <p>date_published: {{photo.date_published}}</p>
     <p>published: {{photo.published}}</p>
-    {% endfor %}
+
     {% else %}
     <p>¡Alas! We don't have that photo yet, but you can fill the void!</p>
     <p>Create an account with the link below and let's see what you got ;)</p>
