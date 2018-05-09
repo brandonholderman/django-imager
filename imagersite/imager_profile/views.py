@@ -4,35 +4,6 @@ from .models import ImagerProfile
 from django.views.generic import DetailView
 
 
-# class ProfileView(TemplateView)
-
-
-# def profile_view(request, username=None):
-#     """Renders profile view"""
-#     owner = False
-
-#     if not username:
-#         username = request.user.get_username()
-#         owner = True
-#         if username == '':
-#             return redirect('home')
-
-#     profile = get_object_or_404(ImagerProfile, user__username=username)
-#     albums = Album.objects.filter(user__username=username)
-#     photos = Photo.objects.filter(album__user__username=username)
-
-#     if not owner:
-#         photos = Photo.objects.filter(published='PUBLIC')
-#         albums = Album.objects.filter(published='PUBLIC')
-
-#     context = {
-#         'profile': profile,
-#         'albums': albums,
-#         'photos': photos
-#     }
-
-#     return render(request, 'imager_profile/profile.html', context)
-
 class ProfileView(DetailView):
     template_name = 'imager_profile/profile.html'
     context_object_name = 'profile'
@@ -68,3 +39,33 @@ class ProfileView(DetailView):
 
         return context
 
+
+
+# class ProfileView(TemplateView)
+
+
+# def profile_view(request, username=None):
+#     """Renders profile view"""
+#     owner = False
+
+#     if not username:
+#         username = request.user.get_username()
+#         owner = True
+#         if username == '':
+#             return redirect('home')
+
+#     profile = get_object_or_404(ImagerProfile, user__username=username)
+#     albums = Album.objects.filter(user__username=username)
+#     photos = Photo.objects.filter(album__user__username=username)
+
+#     if not owner:
+#         photos = Photo.objects.filter(published='PUBLIC')
+#         albums = Album.objects.filter(published='PUBLIC')
+
+#     context = {
+#         'profile': profile,
+#         'albums': albums,
+#         'photos': photos
+#     }
+
+#     return render(request, 'imager_profile/profile.html', context)

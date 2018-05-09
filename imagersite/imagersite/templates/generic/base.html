@@ -30,7 +30,6 @@
                 <li><a href="{% url 'library' %}">Library</a></li>
                 <li><a href="{% url 'albums' %}">Albums</a></li>
                 <li><a href="{% url 'photos' %}">Photos</a></li>
-                <li><a href="{% url 'photo_create' %}">Add</a></li>
                 {% if user.is_superuser %}
                 <li><a href="{% url 'admin:index' %}">Admin</a></li>
                 {% endif %}

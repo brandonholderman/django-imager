@@ -8,14 +8,20 @@
 {% if user.is_authenticated %}
 
   <h3>Library of {{ profile.user.username }}</h3>
-<div>
+  <button>  
+      <a href="{% url 'album_create' %}">Add Album</a>
+  </button>
+  <button>  
+      <a href="{% url 'photo_create' %}">Add Photo</a>
+  </button>
+  <div>
 
     {% for album in albums %}
     <h3>{{album.title}}</h3>
     {% thumbnail album.cover_image.image "300x300" as image %}
     <img src="{{ image.url }}">
     {% empty %}
-    <img src="{% static 'placeholder.jpg' %}">
+    <img src="{% static 'placeholder.jpeg' %}">
     {% endthumbnail %}
     {% endfor %}
 </div>

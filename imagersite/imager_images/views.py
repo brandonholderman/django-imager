@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect
 from .models import Photo, Album
 from imager_profile.models import ImagerProfile
 from django.views.generic import ListView, DetailView, CreateView
-from .forms import PhotoForm
+from .forms import PhotoForm, AlbumForm
 from django.urls import reverse_lazy
 
 
@@ -18,8 +18,10 @@ class LibraryView(ListView):
         return super().get(*args, **kwargs)
 
     def get_queryset(self, **kwargs):
-        photo_query = Photo.objects.filter(published='PUBLIC')
-        album_query = Album.objects.filter(published='PUBLIC')
+        photo_query = Photo.objects.filter(published='PUBLIC').filter(
+            album__user__username=self.request.user.username)
+        album_query = Album.objects.filter(published='PUBLIC').filter(
+            user__username=self.request.user.username)
         profile_query = get_object_or_404(ImagerProfile, user__username=self.request.user.username)
 
         return [photo_query, album_query, profile_query]
@@ -107,7 +109,7 @@ class PhotoCreateView(CreateView):
     template_name = 'imager_images/photo_create.html'
     model = Photo
     form_class = PhotoForm
-    success_url = reverse_lazy('home')
+    success_url = reverse_lazy('library')
 
     def get(self, *args, **kwargs):
         if not self.request.user.is_authenticated:
@@ -130,11 +132,12 @@ class PhotoCreateView(CreateView):
         form.instance.user = self.request.user
         return super().form_valid(form)
 
+
 class AlbumCreateView(CreateView):
-    template_name = 'imager_images/photo_create.html'
+    template_name = 'imager_images/album_create.html'
     model = Album
     form_class = AlbumForm
-    success_url = reverse_lazy('home')
+    success_url = reverse_lazy('library')
 
     def get(self, *args, **kwargs):
         if not self.request.user.is_authenticated:
