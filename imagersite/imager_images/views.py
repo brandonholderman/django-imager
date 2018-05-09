@@ -42,16 +42,16 @@ class PhotoView(ListView):
     def get(self, *args, **kwargs):
         if not self.request.user.is_authenticated:
             return redirect('home')
-        
+
         return super().get(*args, **kwargs)
-    
+
     def get_queryset(self):
-        
+
         return Photo.objects.filter(published='PUBLIC')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-    
+
         return context
 
 
@@ -85,7 +85,7 @@ class AlbumDetailView(DetailView):
     def get(self, *args, **kwargs):
         if not self.request.user.is_authenticated:
             return redirect('home')
-        
+
         return super().get(*args, **kwargs)
 
 
@@ -107,6 +107,33 @@ class PhotoCreateView(CreateView):
     template_name = 'imager_images/photo_create.html'
     model = Photo
     form_class = PhotoForm
+    success_url = reverse_lazy('home')
+
+    def get(self, *args, **kwargs):
+        if not self.request.user.is_authenticated:
+            return redirect('home')
+
+        return super().get(*args, **kwargs)
+
+    def post(self, *args, **kwargs):
+        if not self.request.user.is_authenticated:
+            return redirect('home')
+
+        return super().post(*args, **kwargs)
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs.update({'username': self.request.user.username})
+        return kwargs
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
+class AlbumCreateView(CreateView):
+    template_name = 'imager_images/photo_create.html'
+    model = Album
+    form_class = AlbumForm
     success_url = reverse_lazy('home')
 
     def get(self, *args, **kwargs):
