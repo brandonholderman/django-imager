@@ -10,8 +10,6 @@
   <h3>{% trans "Welcome" %} {{ user.username }}</h3>
   {% endif %}
 
-
-  {% for album in albums %}
   <table>
     <th>You're viewing the profile for {{ profile.user.username }}</th>
     <tr>
@@ -32,7 +30,7 @@
     </tr>
     </tr>
   </table>
-  {% endfor %}
+
 
   {% comment %} <section class="profile-info">
     <h2>Profile Information</h2>

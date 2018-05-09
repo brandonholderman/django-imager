@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Photo, Album
 from imager_profile.models import ImagerProfile
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, CreateView
+from .forms import PhotoForm
 
 
 class LibraryView(ListView):
@@ -57,7 +58,6 @@ class AlbumView(ListView):
     template_name = 'imager_images/albums.html'
     context_object_name = 'albums'
     # queryset = album.objects.filter(published='PUBLIC')
-    
 
     def get(self, *args, **kwargs):
         if not self.request.user.is_authenticated:
@@ -70,7 +70,7 @@ class AlbumView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-    
+
         return context
 
 
@@ -97,5 +97,60 @@ class PhotoDetailView(DetailView):
     def get(self, *args, **kwargs):
         if not self.request.user.is_authenticated:
             return redirect('home')
-        
+
         return super().get(*args, **kwargs)
+
+
+class PhotoCreateView(CreateView):
+    template_name = 'imager_images/photo_create.html'
+    model = Photo
+    form_class = PhotoForm
+    success_url = 'photo'
+
+    def get(self, *args, **kwargs):
+        if not self.request.user.is_authenticated:
+            return redirect('home')
+
+        return super().get(*args, **kwargs)
+
+    def post(self, *args, **kwargs):
+        if not self.request.user.is_authenticated:
+            return redirect('home')
+
+        return super().post(*args, **kwargs)
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs.update({'username': self.request.user.username})
+        return kwargs
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
+# class AlbumCreateView(CreateView):
+#     template_name = ''
+#     model = Album
+#     form_class = AlbumForm
+#     success_url = 'album'
+
+#     def get(self, *args, **kwargs):
+#         if not self.request.user.is_authenticated:
+#             return redirect('home')
+
+#         return super().get(*args, **kwargs)
+
+#     def post(self, *args, **kwargs):
+#         if not self.request.user.is_authenticated:
+#             return redirect('home')
+
+#         return super().post(*args, **kwargs)
+
+#     def get_form_kwargs(self):
+#         kwargs = super().get_form_kwargs()
+#         kwargs.update({'username': self.request.user.username})
+#         return kwargs
+
+#     def form_valid(self, form):
+#         form.instance.user = self.request.user
+#         return super().form_valid(form)
