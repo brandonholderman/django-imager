@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.http import HttpResponseRedirect
 from .models import Photo, Album
 from imager_profile.models import ImagerProfile
 from django.views.generic import ListView, DetailView, CreateView
 from .forms import PhotoForm
+from django.urls import reverse_lazy
 
 
 class LibraryView(ListView):
@@ -105,7 +107,7 @@ class PhotoCreateView(CreateView):
     template_name = 'imager_images/photo_create.html'
     model = Photo
     form_class = PhotoForm
-    success_url = 'photo'
+    success_url = reverse_lazy('home')
 
     def get(self, *args, **kwargs):
         if not self.request.user.is_authenticated:
@@ -127,6 +129,23 @@ class PhotoCreateView(CreateView):
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
+
+    # def form_valid(self, form):
+    #     upload_image = Photo(image=self.get_form_kwargs().get('files')['image'])
+    #     upload_image.save()
+    #     self.id = upload_image.id
+
+
+    # def upload_file(self, request):
+    #     if request.method == 'POST':
+    #         form = PhotoForm(request.POST, request.FILES)
+    #         if form.is_valid():
+    #             # file is saved
+    #             form.save()
+    #             return HttpResponseRedirect('photos')
+    #     else:
+    #         form = PhotoForm()
+    #     return render(request, 'imager_images/photo_create.html', {'form': form})
 
 # class AlbumCreateView(CreateView):
 #     template_name = ''

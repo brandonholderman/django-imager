@@ -1,14 +1,15 @@
 from django.forms import ModelForm
-from .models import Photo
+from .models import Photo, Album
 
 
 class PhotoForm(ModelForm):
     class Meta:
         model = Photo
-        fields = ['image', 'title', 'description', 'published']
+        fields = ['album', 'image', 'title', 'description', 'published']
+        # import pdb; pdb.set_trace()
 
     def __init__(self, *args, **kwargs):
         username = kwargs.pop('username')
         super().__init__(*args, **kwargs)
-        self.fields['image'].queryset = Photo.objects.filter(
-            album__user__username=username)
+        self.fields['album'].queryset = Album.objects.filter(
+            user__username=username)
