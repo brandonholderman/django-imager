@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from imager_images.models import Album, Photo
 from .models import ImagerProfile
-from django.views.generic import DetailView
+from django.views.generic import DetailView, LoginRequiredMixin, UpdateView
+from django.urls import reverse_lazy
 
 
 class ProfileView(DetailView):
@@ -15,7 +16,6 @@ class ProfileView(DetailView):
     def get(self, *args, **kwargs):
         if not self.request.user.is_authenticated:
             return redirect('home')
-        # import pdb; pdb.set_trace()
         if self.kwargs == {}:
             self.kwargs['username'] = self.request.user.get_username()
 
@@ -40,6 +40,31 @@ class ProfileView(DetailView):
         return context
 
 
+class ProfileEditView(LoginRequiredMixin, UpdateView):
+    template_name = "imager_profile/profile-edit.html"
+    model = ImagerProfile
+    form = ProfilEditForm
+    login_url = reverse_lazy('auth_login')
+    success_url = reverse_lazy('profile')
+    slug_url_kwarg = 'username'
+    slug_field = 'user__username'
+
+    def get(self, *args, **kwargs):
+        self.kwargs['username'] = self.request.user.get_username()
+        return super().get(*args, **kwargs)
+
+    def post(self, *args, **kwargs):
+        self.kwargs['username'] = self.request.user.get_username()
+        return super().post(*args, **kwargs)
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs.update({'username': self.request.get_username()})
+        return kwargs
+
+    def form_valid(self, form):
+        form.instance.user.email = form.data['email']
+        return super().form_valid(form)
 
 # class ProfileView(TemplateView)
 

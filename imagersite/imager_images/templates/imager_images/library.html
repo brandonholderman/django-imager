@@ -6,12 +6,14 @@
 {% if user.is_authenticated%}
 
 <h3>Library of {{ profile.user.username }}</h3>
-<button>
-    <a href="{% url 'album_create' %}">Add Album</a>
-</button>
-<button>
-    <a href="{% url 'photo_create' %}">Add Photo</a>
-</button>
+<div class="add-buttons">
+    <button>
+        <a href="{% url 'album_create' %}">Add Album</a>
+    </button>
+    <button>
+        <a href="{% url 'photo_create' %}">Add Photo</a>
+    </button>
+</div>
 
 <h3>Albums</h3>
 <div class="album-container">
