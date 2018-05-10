@@ -1,11 +1,12 @@
 {% extends "generic/base.html" %}
 
 {% block content %}
+
 <h2>All Albums</h2>
 
 <div>
     {% if album %}
-    
+
     <img src="{{album.cover_image.image.url}}">
     <p>title: {{album.name}}</p>
     <p>description: {{album.description}}</p>
@@ -17,7 +18,9 @@
     {% else %}
     <p>¡Alas! We don't have that album yet, but you can fill the void!</p>
     <p>Create an account with the link below and let's see what you got ;)</p>
-    <button><a href="{% url 'registration_register' %}">Create Your Account</a></button>
+    <button>
+        <a href="{% url 'registration_register' %}">Create Your Account</a>
+    </button>
     {% endif %}
 </div>
 

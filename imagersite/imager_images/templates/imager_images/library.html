@@ -1,31 +1,29 @@
 {% extends "generic/base.html" %}
 
-{% load thumbnail %}
-{% load static %}
+{% load thumbnail %} 
+{% load static %} 
+{% block content %} 
+{% if user.is_authenticated%}
 
+<h3>Library of {{ profile.user.username }}</h3>
+<button>
+    <a href="{% url 'album_create' %}">Add Album</a>
+</button>
+<button>
+    <a href="{% url 'photo_create' %}">Add Photo</a>
+</button>
 
-{% block content %}
-{% if user.is_authenticated %}
-
-  <h3>Library of {{ profile.user.username }}</h3>
-  <button>  
-      <a href="{% url 'album_create' %}">Add Album</a>
-  </button>
-  <button>  
-      <a href="{% url 'photo_create' %}">Add Photo</a>
-  </button>
-
-  <h3>Albums</h3>
-  <div class="album-container">
+<h3>Albums</h3>
+<div class="album-container">
     {% for album in albums %}
     {% thumbnail album.cover_image.image "300x300" as image %}
     <div class="image-grid">
-    <img src="{{ image.url }}">
-    <div class="title-box">
-        <p>{{album.name}}</p>
+        <img src="{{ image.url }}">
+        <div class="title-box">
+            <p>{{album.name}}</p>
+        </div>
+        {% endthumbnail %}
     </div>
-    {% endthumbnail %}
-</div>
     {% endfor %}
 </div>
 <div class="clearfix">
@@ -34,18 +32,18 @@
 
 <h3>Photos</h3>
 <div class="photo-container">
-    {% if photos %}
-    {% for photo in photos %}
+    {% if photos %} 
+    {% for photo in photos %} 
     {% thumbnail photo.image "300x200" as image %}
     <div class="image-grid">
-    <img src="{{image.url}}">
-    <div class="title-box">
-        <p>{{photo.title}}</p>
+        <img src="{{image.url}}">
+        <div class="title-box">
+            <p>{{photo.title}}</p>
+        </div>
+
+        {% endthumbnail %}
     </div>
-    
-    {% endthumbnail %}
-</div>
-    {% endfor %}
+    {% endfor %} 
     {% endif %}
 </div>
 
