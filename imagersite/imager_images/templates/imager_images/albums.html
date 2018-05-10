@@ -9,10 +9,15 @@
     {% if albums %}
     {% for album in albums %}
     {% thumbnail album.cover_image.image "300x200" as image %}
-    <a href="{% url 'album_detail' id=album.id %}">
+<div class="image-grid">
+    <a href="{% url 'album_detail' pk=album.id %}">
         <img src="{{image.url}}">
     </a>
-    <p>{{album.name}}</p>
+    <div class="title-box">
+        <p>{{album.name}}</p>
+    </div>
+</div>
+    </a>
     {% endthumbnail %}
     {% endfor %}
     {% else %}

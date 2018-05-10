@@ -9,10 +9,14 @@
     {% if photos %}
     {% for photo in photos %}
     {% thumbnail photo.image "300x200" as image %}
-    <a href="{% url 'photo_detail' id=photo.id %}">
-        <img src="{{image.url}}">
-    </a>
-    <p>{{photo.title}}</p>
+    <div class="image-grid">
+        <a href="{% url 'photo_detail' id=photo.id %}">
+            <img src="{{image.url}}">
+        </a>
+        <div class="title-box">
+            <p>{{photo.title}}</p>
+        </div>
+    </div>
     
     {% endthumbnail %}
     {% endfor %}

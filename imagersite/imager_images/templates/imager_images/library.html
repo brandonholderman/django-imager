@@ -14,28 +14,40 @@
   <button>  
       <a href="{% url 'photo_create' %}">Add Photo</a>
   </button>
-  <div>
 
+  <h3>Albums</h3>
+  <div class="album-container">
     {% for album in albums %}
-    <h3>{{album.title}}</h3>
     {% thumbnail album.cover_image.image "300x300" as image %}
+    <div class="image-grid">
     <img src="{{ image.url }}">
-    {% empty %}
-    <img src="{% static 'placeholder.jpeg' %}">
+    <div class="title-box">
+        <p>{{album.name}}</p>
+    </div>
     {% endthumbnail %}
+</div>
     {% endfor %}
 </div>
+<div class="clearfix">
 
-<div>
+</div>
+
+<h3>Photos</h3>
+<div class="photo-container">
     {% if photos %}
     {% for photo in photos %}
     {% thumbnail photo.image "300x200" as image %}
+    <div class="image-grid">
     <img src="{{image.url}}">
+    <div class="title-box">
+        <p>{{photo.title}}</p>
+    </div>
     
     {% endthumbnail %}
+</div>
     {% endfor %}
     {% endif %}
-</div>  
+</div>
 
 {% endif %}
 {% endblock content %}

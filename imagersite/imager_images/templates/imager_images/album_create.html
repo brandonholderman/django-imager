@@ -1,9 +1,9 @@
  {% extends "generic/base.html" %} 
  
  {% block content %}
-<div class="album-create container">
+<div class="album-create-form">
     <h2>Add a new album</h2>
-    <form class="album-create-form" method="POST" enctype="multipart/form-data">
+    <form class="upload-form" method="POST" enctype="multipart/form-data">
         {% csrf_token %} {{ form.as_p }}
         <button type="submit">add</button>
     </form>

@@ -5,7 +5,7 @@ from .models import Photo, Album
 class PhotoForm(ModelForm):
     class Meta:
         model = Photo
-        fields = ['album', 'image', 'title', 'description', 'published']
+        fields = ['image', 'album', 'title', 'description', 'published']
         # import pdb; pdb.set_trace()
 
     def __init__(self, *args, **kwargs):
