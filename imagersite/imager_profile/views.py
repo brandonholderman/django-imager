@@ -1,8 +1,10 @@
+from django.views.generic import DetailView, UpdateView
 from django.shortcuts import render, redirect, get_object_or_404
 from imager_images.models import Album, Photo
-from .models import ImagerProfile
-from django.views.generic import DetailView, LoginRequiredMixin, UpdateView
 from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
+from .models import ImagerProfile
+from .forms import ProfileEditForm
 
 
 class ProfileView(DetailView):
@@ -10,8 +12,6 @@ class ProfileView(DetailView):
     context_object_name = 'profile'
     slug_url_kwargs = 'username'
     slug_field = 'user__username'
-    # queryset = ImagerProfile.objects.filter(user__username=slug_field)
-    # queryset = get_object_or_404(ImagerProfile, user__username='username')
 
     def get(self, *args, **kwargs):
         if not self.request.user.is_authenticated:
@@ -26,6 +26,7 @@ class ProfileView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        # import pdb; pdb.set_trace()
         username = context['object'][0].user.username
         profile = get_object_or_404(ImagerProfile, user__username=username)
         albums = Album.objects.filter(user__username=username)
@@ -43,7 +44,7 @@ class ProfileView(DetailView):
 class ProfileEditView(LoginRequiredMixin, UpdateView):
     template_name = "imager_profile/profile-edit.html"
     model = ImagerProfile
-    form = ProfilEditForm
+    form_class = ProfileEditForm
     login_url = reverse_lazy('auth_login')
     success_url = reverse_lazy('profile')
     slug_url_kwarg = 'username'
@@ -59,38 +60,12 @@ class ProfileEditView(LoginRequiredMixin, UpdateView):
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
-        kwargs.update({'username': self.request.get_username()})
+        kwargs.update({'username': self.request.user.username})
         return kwargs
 
     def form_valid(self, form):
         form.instance.user.email = form.data['email']
+        form.instance.user.first_name = form.data['first_name']
+        form.instance.user.last_name = form.data['last_name']
+        form.instance.user.save()
         return super().form_valid(form)
-
-# class ProfileView(TemplateView)
-
-
-# def profile_view(request, username=None):
-#     """Renders profile view"""
-#     owner = False
-
-#     if not username:
-#         username = request.user.get_username()
-#         owner = True
-#         if username == '':
-#             return redirect('home')
-
-#     profile = get_object_or_404(ImagerProfile, user__username=username)
-#     albums = Album.objects.filter(user__username=username)
-#     photos = Photo.objects.filter(album__user__username=username)
-
-#     if not owner:
-#         photos = Photo.objects.filter(published='PUBLIC')
-#         albums = Album.objects.filter(published='PUBLIC')
-
-#     context = {
-#         'profile': profile,
-#         'albums': albums,
-#         'photos': photos
-#     }
-
-#     return render(request, 'imager_profile/profile.html', context)

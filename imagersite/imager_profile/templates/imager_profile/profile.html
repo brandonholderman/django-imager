@@ -28,7 +28,21 @@
       <th>{% trans "Number of albums" %}:</th>
       <td>{{ albums.count }}</td>
     </tr>
+    <tr>
+      <th>{% trans "User First Name" %}:</th>
+      <td>{{ profile.user.first_name }}</td>
     </tr>
+    <tr>
+      <th>{% trans "User Last Name" %}:</th>
+      <td>{{ profile.user.last_name }}</td>
+    </tr>
+    <tr>
+      <th>{% trans "User Email" %}:</th>
+      <td>{{ profile.user.email }}</td>
+    </tr>
+    <button>
+      <a href="{% url 'edit' profile.user.username %}">Edit Profile</a>
+    </button>
   </table>
 
 

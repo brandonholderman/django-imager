@@ -26,3 +26,27 @@ class AlbumForm(ModelForm):
         super().__init__(*args, **kwargs)
         self.fields['cover_image'].queryset = Photo.objects.filter(
             album__user__username=username)
+
+
+class PhotoEditForm(ModelForm):
+    class Meta:
+        model = Photo
+        fields = ['album', 'title', 'description', 'published']
+
+        def __init__(self, *args, **kwargs):
+            username = kwargs.pop('username')
+            super().__init__(*args, **kwargs)
+            self.fields['album'].queryset = Album.objects.filter(
+                user__username=username)
+
+
+class AlbumEditForm(ModelForm):
+    class Meta:
+        model = Album
+        fields = ['cover_image', 'name', 'description', 'published']
+
+        def __init__(self, *args, **kwargs):
+            username = kwargs.pop('username')
+            super().__init__(*args, **kwargs)
+            self.fields['cover_image'].queryset = Photo.objects.filter(
+                album__user__username=username)
