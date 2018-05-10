@@ -1,0 +1,59 @@
+body {
+  background-color: #2e3035;
+  color: white; }
+
+h1, h2, h3, h4, a {
+  font-family: 'Fredoka One', cursive; }
+
+p {
+  font-family: 'Open Sans', sans-serif; }
+
+header {
+  background-image: url("https://s.imgur.com/desktop-assets/desktop-assets/bg-home-2.f1df058d8494e2f402781cc93a7f4003.png");
+  height: 80px; }
+
+header #site-title {
+  width: 250px;
+  display: inline-block;
+  margin: 25px; }
+
+header h1 {
+  font-size: 2em; }
+
+header h1 a {
+  text-decoration: none;
+  color: white; }
+
+header h3 {
+  float: right;
+  margin: 33px; }
+
+header nav {
+  float: right;
+  margin: 33px; }
+
+header nav ul li {
+  display: inline-block; }
+
+header nav ul li a {
+  text-decoration: none;
+  color: grey; }
+
+header nav ul li a:hover {
+  color: white; }
+
+.photo-create-form {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translateY(-50%) translateX(-50%);
+  background-color: #45484f;
+  height: 450px;
+  width: 680px;
+  border-radius: 5px;
+  box-shadow: 0 5px 15px 0 rgba(0, 0, 0, 0.5); }
+
+.photo-create-form p {
+  text-align: center; }
+
+/*# sourceMappingURL=../../../../../../../../../static/_modules.css.map */
