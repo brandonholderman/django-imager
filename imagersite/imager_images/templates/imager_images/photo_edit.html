@@ -4,6 +4,7 @@
 {% block content %}
 
 <div class="photo-edit container">
+ {% if photo %}
     {% thumbnail photo.image "200x100" as image %}
     <img src="{{image.url}}" class="image-to-edit">
     {% endthumbnail %}
@@ -13,5 +14,6 @@
         {{ form.as_p }}
         <button type="submit">Update Photo</button>
     </form>
+    {% endif %}
 </div>
 {% endblock content %}

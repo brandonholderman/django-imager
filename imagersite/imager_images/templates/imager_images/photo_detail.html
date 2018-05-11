@@ -1,12 +1,15 @@
 {% extends "generic/base.html" %}
 
+{% load thumbnail %}
 {% block content %}
 
 <h2>All Photos</h2>
 
 <div>
     {% if photo %}
-    <img src="{{photo.image.url}}">
+    {% thumbnail photo.image "700x500" as image %}
+    <img src="{{image.url}}">
+    {% endthumbnail %}
     <p>title: {{photo.title}}</p>
     <p>description: {{photo.description}}</p>
     <p>date_uploaded: {{photo.date_uploaded}}</p>

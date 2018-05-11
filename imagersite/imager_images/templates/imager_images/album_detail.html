@@ -1,13 +1,15 @@
 {% extends "generic/base.html" %}
 
+{% load thumbnail %}
 {% block content %}
 
 <h2>All Albums</h2>
 
 <div>
     {% if album %}
-
-    <img src="{{album.cover_image.image.url}}">
+    {% thumbnail album.cover_image.image "700x500" as image %}
+    <img src="{{image.url}}">
+    {% endthumbnail %}
     <p>title: {{album.name}}</p>
     <p>description: {{album.description}}</p>
     <p>date_created: {{album.date_created}}</p>
