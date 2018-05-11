@@ -161,6 +161,7 @@ class AlbumCreateView(CreateView):
         form.instance.user = self.request.user
         return super().form_valid(form)
 
+
 class PhotoEditView(LoginRequiredMixin, UpdateView):
     template_name = "imager_images/photo-edit.html"
     model = Photo
@@ -186,8 +187,36 @@ class PhotoEditView(LoginRequiredMixin, UpdateView):
     #     return kwargs
 
     def form_valid(self, form):
-        form.instance.user.email = form.data['email']
-        form.instance.user.first_name = form.data['first_name']
-        form.instance.user.last_name = form.data['last_name']
-        form.instance.user.save()
+        form.instance.title = form.data['title']
+        form.instance.save()
+        return super().form_valid(form)
+
+
+class AlbumEditView(LoginRequiredMixin, UpdateView):
+    template_name = "imager_images/album-edit.html"
+    model = Album
+    form_class = AlbumEditForm
+    login_url = reverse_lazy('auth_login')
+    success_url = reverse_lazy('albums')
+    slug_url_kwarg = 'album_id'
+    slug_field = 'id'
+
+    def get(self, *args, **kwargs):
+        # import pdb; pdb.set_trace()
+        self.kwargs['username'] = self.request.user.get_username()
+        return super().get(*args, **kwargs)
+
+    def post(self, *args, **kwargs):
+        self.kwargs['username'] = self.request.user.get_username()
+        return super().post(*args, **kwargs)
+
+    # def get_form_kwargs(self):
+    #     # import pdb; pdb.set_trace()
+    #     kwargs = super().get_form_kwargs()
+    #     kwargs.update({'username': self.request.user.username})
+    #     return kwargs
+
+    def form_valid(self, form):
+        form.instance.name = form.data['name']
+        form.instance.save()
         return super().form_valid(form)

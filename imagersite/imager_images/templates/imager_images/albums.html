@@ -13,6 +13,7 @@
         </a>
         <div class="title-box">
             <p>{{album.name}}</p>
+            <a href="{% url 'album_edit' album_id=album.id %}">Edit Album</a>
         </div>
     </div>
     </a>

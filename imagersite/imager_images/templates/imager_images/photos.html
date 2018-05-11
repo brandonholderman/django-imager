@@ -13,6 +13,7 @@
         </a>
         <div class="title-box">
             <p>{{photo.title}}</p>
+            <a href="{% url 'photo_edit' photo_id=photo.id %}">Edit Photo</a>
         </div>
     </div>
 
