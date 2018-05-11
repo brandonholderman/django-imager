@@ -40,9 +40,11 @@
       <th>{% trans "User Email" %}:</th>
       <td>{{ profile.user.email }}</td>
     </tr>
+    {% if profile.user.username == user.username %}
     <button>
       <a href="{% url 'edit' profile.user.username %}">Edit Profile</a>
     </button>
+    {% endif %}
   </table>
 
 

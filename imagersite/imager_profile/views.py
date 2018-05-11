@@ -26,7 +26,6 @@ class ProfileView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # import pdb; pdb.set_trace()
         username = context['object'][0].user.username
         profile = get_object_or_404(ImagerProfile, user__username=username)
         albums = Album.objects.filter(user__username=username)
@@ -38,6 +37,7 @@ class ProfileView(DetailView):
             'photos': photos
             }
 
+        # import pdb; pdb.set_trace()
         return context
 
 
