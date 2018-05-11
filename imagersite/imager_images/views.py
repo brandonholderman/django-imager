@@ -180,12 +180,6 @@ class PhotoEditView(LoginRequiredMixin, UpdateView):
         self.kwargs['username'] = self.request.user.get_username()
         return super().post(*args, **kwargs)
 
-    # def get_form_kwargs(self):
-    #     # import pdb; pdb.set_trace()
-    #     kwargs = super().get_form_kwargs()
-    #     kwargs.update({'username': self.request.user.username})
-    #     return kwargs
-
     def form_valid(self, form):
         form.instance.title = form.data['title']
         form.instance.save()
@@ -209,12 +203,6 @@ class AlbumEditView(LoginRequiredMixin, UpdateView):
     def post(self, *args, **kwargs):
         self.kwargs['username'] = self.request.user.get_username()
         return super().post(*args, **kwargs)
-
-    # def get_form_kwargs(self):
-    #     # import pdb; pdb.set_trace()
-    #     kwargs = super().get_form_kwargs()
-    #     kwargs.update({'username': self.request.user.username})
-    #     return kwargs
 
     def form_valid(self, form):
         form.instance.name = form.data['name']
