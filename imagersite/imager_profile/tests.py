@@ -67,22 +67,22 @@ class ProfileUnitTests(TestCase):
 class ProfileRouteTests(TestCase):
     def setUp(self):
         self.request = RequestFactory()
-        user_one = UserFactory(username='gandalf', email='wizard@middle.earth')
+        user_one = UserFactory(username='brandon', email='brandon@brandon.brandon')
         user_one.set_password('password')
         user_one.save()
 
         populate_profile(user_one)
         user_one.profile.save()
 
-        user_two = UserFactory(username='bilbo', email='hobbit@middle.earth')
+        user_two = UserFactory(username='tyler', email='tyler@tyler.tyler')
         user_two.set_password('password')
         user_two.save()
 
         populate_profile(user_two)
         user_two.profile.save()
 
-        self.gandalf = user_one
-        self.bilbo = user_two
+        self.brandon = user_one
+        self.tyler = user_two
 
     def tearDown(self):
         User.objects.all().delete()
@@ -93,27 +93,27 @@ class ProfileRouteTests(TestCase):
 
     def test_profile_route_has_200_response_given_an_authenticated_user(self):
         c = Client()
-        c.login(username=self.gandalf.username, password='password')
+        c.login(username=self.brandon.username, password='password')
         response = c.get('/profile/')
         self.assertEqual(response.status_code, 200)
 
     def test_profile_route_has_user_info(self):
         c = Client()
-        c.login(username=self.gandalf.username, password='password')
+        c.login(username=self.brandon.username, password='password')
         response = c.get('/profile/')
         self.assertEqual(
-            response.context['user'].username, self.gandalf.username)
+            response.context['user'].username, self.brandon.username)
 
     def test_profile_route_does_not_allow_editing_for_other_users(self):
         c = Client()
-        c.login(username=self.gandalf.username, password='password')
-        response = c.get('/profile/bilbo')
+        c.login(username=self.brandon.username, password='password')
+        response = c.get('/profile/tyler')
         self.assertNotIn(b'Edit Profile', response.content)
 
     # def test_profile_route_does_allow_editing_for_signed_in_users(self):
     #     c = Client()
-    #     c.login(username=self.gandalf.username, password='password')
-    #     response = c.get('/profile/gandalf')
+    #     c.login(username=self.brandon.username, password='password')
+    #     response = c.get('/profile/brandon')
     #     self.assertIn(b'Edit Profile', response.content)
 
     def test_profile_route_returns_302_if_user_does_not_exist(self):
@@ -135,6 +135,5 @@ class ProfileRouteTests(TestCase):
     def test_str_method_on_username(self):
         """Test string method on album."""
         one_profile = ImagerProfile.objects.first()
-        one_profile.user.username = 'papa doc'
-        # import pdb; pdb.set_trace()
-        self.assertEqual(str(one_profile), 'papa doc')
+        one_profile.user.username = 'tandon'
+        self.assertEqual(str(one_profile), 'tandon')
