@@ -1,7 +1,7 @@
-from django.contrib.auth.models import AnonymousUser
+# from django.contrib.auth.models import AnonymousUser
+# from django.http import Http404
 from django.test import TestCase, RequestFactory
 from .models import ImagerProfile, User
-from django.http import Http404
 from django.urls import reverse_lazy
 from django.test import Client
 from faker import Faker
@@ -67,7 +67,8 @@ class ProfileUnitTests(TestCase):
 class ProfileRouteTests(TestCase):
     def setUp(self):
         self.request = RequestFactory()
-        user_one = UserFactory(username='brandon', email='brandon@brandon.brandon')
+        user_one = UserFactory(username='brandon',
+                               email='brandon@brandon.brandon')
         user_one.set_password('password')
         user_one.save()
 
