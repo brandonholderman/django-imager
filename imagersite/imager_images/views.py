@@ -163,7 +163,7 @@ class AlbumCreateView(CreateView):
 
 
 class PhotoEditView(LoginRequiredMixin, UpdateView):
-    template_name = "imager_images/photo-edit.html"
+    template_name = "imager_images/photo_edit.html"
     model = Photo
     form_class = PhotoEditForm
     login_url = reverse_lazy('auth_login')
@@ -187,7 +187,7 @@ class PhotoEditView(LoginRequiredMixin, UpdateView):
 
 
 class AlbumEditView(LoginRequiredMixin, UpdateView):
-    template_name = "imager_images/album-edit.html"
+    template_name = "imager_images/album_edit.html"
     model = Album
     form_class = AlbumEditForm
     login_url = reverse_lazy('auth_login')

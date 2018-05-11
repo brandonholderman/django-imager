@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="profile-edit container">
-    <form class="profile-edit-form" method="POST">
+    <form class="profile-edit-form input-form" method="POST">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">Update Profile</button>

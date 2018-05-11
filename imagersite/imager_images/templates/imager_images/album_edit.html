@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="album-edit container">
-    <form class="album-edit-form" method="POST">
+    <form class="album-edit-form input-form" method="POST">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">Update Album</button>

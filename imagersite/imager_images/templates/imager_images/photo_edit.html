@@ -4,11 +4,11 @@
 {% block content %}
 
 <div class="photo-edit container">
-    {% thumbnail photo.image "300x200" as image %}
-    <img src="{{image.url}}">
+    {% thumbnail photo.image "200x100" as image %}
+    <img src="{{image.url}}" class="image-to-edit">
     {% endthumbnail %}
-
-    <form class="photo-edit-form" method="POST">
+    
+    <form class="photo-edit-form input-form" method="POST">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">Update Photo</button>

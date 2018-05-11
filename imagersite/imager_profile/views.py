@@ -42,7 +42,7 @@ class ProfileView(DetailView):
 
 
 class ProfileEditView(LoginRequiredMixin, UpdateView):
-    template_name = "imager_profile/profile-edit.html"
+    template_name = "imager_profile/profile_edit.html"
     model = ImagerProfile
     form_class = ProfileEditForm
     login_url = reverse_lazy('auth_login')
