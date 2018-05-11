@@ -1,11 +1,11 @@
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from .forms import PhotoForm, AlbumForm, PhotoEditForm, AlbumEditForm
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import redirect, get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin
 from imager_profile.models import ImagerProfile
-from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 from .models import Photo, Album
+
 
 class LibraryView(ListView):
     template_name = 'imager_images/library.html'
@@ -22,7 +22,9 @@ class LibraryView(ListView):
             album__user__username=self.request.user.username)
         album_query = Album.objects.filter(published='PUBLIC').filter(
             user__username=self.request.user.username)
-        profile_query = get_object_or_404(ImagerProfile, user__username=self.request.user.username)
+        profile_query = get_object_or_404(
+            ImagerProfile,
+            user__username=self.request.user.username)
 
         return [photo_query, album_query, profile_query]
 
@@ -48,7 +50,6 @@ class PhotoView(ListView):
         return super().get(*args, **kwargs)
 
     def get_queryset(self):
-
         return Photo.objects.filter(published='PUBLIC')
 
     def get_context_data(self, **kwargs):
@@ -74,8 +75,6 @@ class AlbumView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-
-        # import pdb; pdb.set_trace()
         return context
 
 
@@ -172,7 +171,6 @@ class PhotoEditView(LoginRequiredMixin, UpdateView):
     slug_field = 'id'
 
     def get(self, *args, **kwargs):
-        # import pdb; pdb.set_trace()
         self.kwargs['username'] = self.request.user.get_username()
         return super().get(*args, **kwargs)
 
@@ -196,7 +194,6 @@ class AlbumEditView(LoginRequiredMixin, UpdateView):
     slug_field = 'id'
 
     def get(self, *args, **kwargs):
-        # import pdb; pdb.set_trace()
         self.kwargs['username'] = self.request.user.get_username()
         return super().get(*args, **kwargs)
 
