@@ -6,17 +6,22 @@
 <h2>All Albums</h2>
 
 <div>
-    {% if albums %} {% for album in albums %} {% thumbnail album.cover_image.image "300x200" as image %}
+    {% if albums %}
+    {% for album in albums %}
+    {% thumbnail album.cover_image.image "300x200" as image %}
     <div class="image-grid">
         <a href="{% url 'album_detail' pk=album.id %}">
             <img src="{{image.url}}">
         </a>
         <div class="title-box">
             <p>{{album.name}}</p>
+            <a href="{% url 'album_edit' album_id=album.id %}">Edit Album</a>
         </div>
     </div>
     </a>
-    {% endthumbnail %} {% endfor %} {% else %}
+    {% endthumbnail %}
+    {% endfor %}
+    {% else %}
     <h2>Looks like we're all out of albums!</h2>
     {% endif %}
 </div>

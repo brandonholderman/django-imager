@@ -1,13 +1,14 @@
-from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponseRedirect
-from .models import Photo, Album
+from django.views.generic import ListView, DetailView, CreateView, UpdateView
+from .forms import PhotoForm, AlbumForm, PhotoEditForm, AlbumEditForm
+from django.shortcuts import redirect, get_object_or_404
+from django.contrib.auth.mixins import LoginRequiredMixin
 from imager_profile.models import ImagerProfile
-from django.views.generic import ListView, DetailView, CreateView
-from .forms import PhotoForm, AlbumForm
 from django.urls import reverse_lazy
+from .models import Photo, Album
 
 
 class LibraryView(ListView):
+    """Renders library view."""
     template_name = 'imager_images/library.html'
     context_object_name = 'library'
 
@@ -22,7 +23,9 @@ class LibraryView(ListView):
             album__user__username=self.request.user.username)
         album_query = Album.objects.filter(published='PUBLIC').filter(
             user__username=self.request.user.username)
-        profile_query = get_object_or_404(ImagerProfile, user__username=self.request.user.username)
+        profile_query = get_object_or_404(
+            ImagerProfile,
+            user__username=self.request.user.username)
 
         return [photo_query, album_query, profile_query]
 
@@ -48,7 +51,6 @@ class PhotoView(ListView):
         return super().get(*args, **kwargs)
 
     def get_queryset(self):
-
         return Photo.objects.filter(published='PUBLIC')
 
     def get_context_data(self, **kwargs):
@@ -74,8 +76,6 @@ class AlbumView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-
-        # import pdb; pdb.set_trace()
         return context
 
 
@@ -107,6 +107,7 @@ class PhotoDetailView(DetailView):
 
 
 class PhotoCreateView(CreateView):
+    """Render view to add photos."""
     template_name = 'imager_images/photo_create.html'
     model = Photo
     form_class = PhotoForm
@@ -135,6 +136,7 @@ class PhotoCreateView(CreateView):
 
 
 class AlbumCreateView(CreateView):
+    """Renders view to add albums."""
     template_name = 'imager_images/album_create.html'
     model = Album
     form_class = AlbumForm
@@ -161,46 +163,50 @@ class AlbumCreateView(CreateView):
         form.instance.user = self.request.user
         return super().form_valid(form)
 
-    # def form_valid(self, form):
-    #     upload_image = Photo(image=self.get_form_kwargs().get('files')['image'])
-    #     upload_image.save()
-    #     self.id = upload_image.id
+
+class PhotoEditView(LoginRequiredMixin, UpdateView):
+    """Renders view to edit photos."""
+    template_name = "imager_images/photo_edit.html"
+    model = Photo
+    form_class = PhotoEditForm
+    login_url = reverse_lazy('auth_login')
+    success_url = reverse_lazy('photos')
+    slug_url_kwarg = 'photo_id'
+    slug_field = 'id'
+
+    def get(self, *args, **kwargs):
+        self.kwargs['username'] = self.request.user.get_username()
+        return super().get(*args, **kwargs)
+
+    def post(self, *args, **kwargs):
+        self.kwargs['username'] = self.request.user.get_username()
+        return super().post(*args, **kwargs)
+
+    def form_valid(self, form):
+        form.instance.title = form.data['title']
+        form.instance.save()
+        return super().form_valid(form)
 
 
-    # def upload_file(self, request):
-    #     if request.method == 'POST':
-    #         form = PhotoForm(request.POST, request.FILES)
-    #         if form.is_valid():
-    #             # file is saved
-    #             form.save()
-    #             return HttpResponseRedirect('photos')
-    #     else:
-    #         form = PhotoForm()
-    #     return render(request, 'imager_images/photo_create.html', {'form': form})
+class AlbumEditView(LoginRequiredMixin, UpdateView):
+    """Renders view to add albums."""
+    template_name = "imager_images/album_edit.html"
+    model = Album
+    form_class = AlbumEditForm
+    login_url = reverse_lazy('auth_login')
+    success_url = reverse_lazy('albums')
+    slug_url_kwarg = 'album_id'
+    slug_field = 'id'
 
-# class AlbumCreateView(CreateView):
-#     template_name = ''
-#     model = Album
-#     form_class = AlbumForm
-#     success_url = 'album'
+    def get(self, *args, **kwargs):
+        self.kwargs['username'] = self.request.user.get_username()
+        return super().get(*args, **kwargs)
 
-#     def get(self, *args, **kwargs):
-#         if not self.request.user.is_authenticated:
-#             return redirect('home')
+    def post(self, *args, **kwargs):
+        self.kwargs['username'] = self.request.user.get_username()
+        return super().post(*args, **kwargs)
 
-#         return super().get(*args, **kwargs)
-
-#     def post(self, *args, **kwargs):
-#         if not self.request.user.is_authenticated:
-#             return redirect('home')
-
-#         return super().post(*args, **kwargs)
-
-#     def get_form_kwargs(self):
-#         kwargs = super().get_form_kwargs()
-#         kwargs.update({'username': self.request.user.username})
-#         return kwargs
-
-#     def form_valid(self, form):
-#         form.instance.user = self.request.user
-#         return super().form_valid(form)
+    def form_valid(self, form):
+        form.instance.name = form.data['name']
+        form.instance.save()
+        return super().form_valid(form)

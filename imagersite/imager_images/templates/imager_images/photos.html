@@ -6,17 +6,21 @@
 <h2>All Photos</h2>
 
 <div>
-    {% if photos %} {% for photo in photos %} {% thumbnail photo.image "300x200" as image %}
+    {% if photos %} 
+    {% for photo in photos %} 
+    {% thumbnail photo.image "300x200" as image %}
     <div class="image-grid">
         <a href="{% url 'photo_detail' id=photo.id %}">
             <img src="{{image.url}}">
         </a>
         <div class="title-box">
             <p>{{photo.title}}</p>
+            <a href="{% url 'photo_edit' photo_id=photo.id %}">Edit Photo</a>
         </div>
     </div>
-
-    {% endthumbnail %} {% endfor %} {% else %}
+    {% endthumbnail %} 
+    {% endfor %} 
+    {% else %}
     <h2>Looks like we're all out of photos!</h2>
     {% endif %}
 </div>
