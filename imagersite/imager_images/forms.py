@@ -3,6 +3,7 @@ from .models import Photo, Album
 
 
 class PhotoForm(ModelForm):
+    """Form for adding photo."""
     class Meta:
         model = Photo
         fields = ['image', 'album', 'title', 'description', 'published']
@@ -16,6 +17,7 @@ class PhotoForm(ModelForm):
 
 
 class AlbumForm(ModelForm):
+    """Form for adding albums."""
     class Meta:
         model = Album
         fields = ['cover_image', 'name', 'description', 'published']
@@ -29,6 +31,7 @@ class AlbumForm(ModelForm):
 
 
 class PhotoEditForm(ModelForm):
+    """Form for editing photo info."""
     class Meta:
         model = Photo
         fields = ['album', 'title', 'description', 'published']
@@ -41,6 +44,7 @@ class PhotoEditForm(ModelForm):
 
 
 class AlbumEditForm(ModelForm):
+    """Form for editing album info."""
     class Meta:
         model = Album
         fields = ['cover_image', 'name', 'description', 'published']

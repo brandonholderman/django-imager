@@ -8,6 +8,7 @@ from .models import Photo, Album
 
 
 class LibraryView(ListView):
+    """Renders library view."""
     template_name = 'imager_images/library.html'
     context_object_name = 'library'
 
@@ -106,6 +107,7 @@ class PhotoDetailView(DetailView):
 
 
 class PhotoCreateView(CreateView):
+    """Render view to add photos."""
     template_name = 'imager_images/photo_create.html'
     model = Photo
     form_class = PhotoForm
@@ -134,6 +136,7 @@ class PhotoCreateView(CreateView):
 
 
 class AlbumCreateView(CreateView):
+    """Renders view to add albums."""
     template_name = 'imager_images/album_create.html'
     model = Album
     form_class = AlbumForm
@@ -162,6 +165,7 @@ class AlbumCreateView(CreateView):
 
 
 class PhotoEditView(LoginRequiredMixin, UpdateView):
+    """Renders view to edit photos."""
     template_name = "imager_images/photo_edit.html"
     model = Photo
     form_class = PhotoEditForm
@@ -185,6 +189,7 @@ class PhotoEditView(LoginRequiredMixin, UpdateView):
 
 
 class AlbumEditView(LoginRequiredMixin, UpdateView):
+    """Renders view to add albums."""
     template_name = "imager_images/album_edit.html"
     model = Album
     form_class = AlbumEditForm
