@@ -1,0 +1,29 @@
+[Unit]
+Description=gunicorn daemon for imagersite
+After=network.target
+
+[Service]
+Environment="Debug="
+Environment="DB_NAME={{ DB_NAME }}"
+Environment="DB_USER={{ DB_USER }}"
+Environment="SECRET_KEY={{ SECRET_KEY }}"
+
+
+Environment="DB_PASSWORD={{ DB_PASSWORD }}"
+Environment="DB_HOST={{ DB_HOST }}"
+Environment="ALLOWED_HOSTS={{ ALLOWED_HOSTS }}"
+Environment="DJANGO_SETTING_MODULES={{ DJANGO_SETTING_MODULES }}"
+Environment="EMAIL_BACKEND={{ EMAIL_BACKEND }}"
+Environment="EMAIL_HOST={{ EMAIL_HOST }}"
+Environment="EMAIL_PORT={{ EMAIL_PORT }}"
+Environment="EMAIL_HOST_PASSWORD={{ EMAIL_HOST_PASSWORD }}"
+Environment="EMAIL_USE_TLS={{ EMAIL_USE_TLS }}"
+Environment="DEFAULT_FROM_EMAIL={{ DEFAULT_FROM_EMAIL }}"
+
+User=ubuntu
+Group=www-data
+WorkingDirectory=/home/ubuntu/django-imager/imagersite
+ExecStart=/home/ubuntu/env/bin/gunicorn --access-logfile - --workers 3 --bind 127.0.0.1:8000 imagersite.wsgi
+
+[Install]
+WantedBy=multi-user.target
