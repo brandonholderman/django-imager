@@ -8,8 +8,8 @@ class ViewTests(TestCase):
     def test_successful_login(self):
         """Tests login is successful."""
         c = Client()
-        response = c.post('/accounts/login/', {'username': 'john',
-                                               'password': 'smith'})
+        response = c.post('/accounts/login/', {'username': 'homer',
+                                               'password': 'simpson'})
         self.assertEqual(response.status_code, 200)
 
     def test_home_view(self):

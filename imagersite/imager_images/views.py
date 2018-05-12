@@ -1,13 +1,14 @@
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from .forms import PhotoForm, AlbumForm, PhotoEditForm, AlbumEditForm
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import redirect, get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin
 from imager_profile.models import ImagerProfile
-from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 from .models import Photo, Album
 
+
 class LibraryView(ListView):
+    """Renders library view."""
     template_name = 'imager_images/library.html'
     context_object_name = 'library'
 
@@ -22,7 +23,9 @@ class LibraryView(ListView):
             album__user__username=self.request.user.username)
         album_query = Album.objects.filter(published='PUBLIC').filter(
             user__username=self.request.user.username)
-        profile_query = get_object_or_404(ImagerProfile, user__username=self.request.user.username)
+        profile_query = get_object_or_404(
+            ImagerProfile,
+            user__username=self.request.user.username)
 
         return [photo_query, album_query, profile_query]
 
@@ -48,7 +51,6 @@ class PhotoView(ListView):
         return super().get(*args, **kwargs)
 
     def get_queryset(self):
-
         return Photo.objects.filter(published='PUBLIC')
 
     def get_context_data(self, **kwargs):
@@ -74,8 +76,6 @@ class AlbumView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-
-        # import pdb; pdb.set_trace()
         return context
 
 
@@ -107,6 +107,7 @@ class PhotoDetailView(DetailView):
 
 
 class PhotoCreateView(CreateView):
+    """Render view to add photos."""
     template_name = 'imager_images/photo_create.html'
     model = Photo
     form_class = PhotoForm
@@ -135,6 +136,7 @@ class PhotoCreateView(CreateView):
 
 
 class AlbumCreateView(CreateView):
+    """Renders view to add albums."""
     template_name = 'imager_images/album_create.html'
     model = Album
     form_class = AlbumForm
@@ -163,6 +165,7 @@ class AlbumCreateView(CreateView):
 
 
 class PhotoEditView(LoginRequiredMixin, UpdateView):
+    """Renders view to edit photos."""
     template_name = "imager_images/photo_edit.html"
     model = Photo
     form_class = PhotoEditForm
@@ -172,7 +175,6 @@ class PhotoEditView(LoginRequiredMixin, UpdateView):
     slug_field = 'id'
 
     def get(self, *args, **kwargs):
-        # import pdb; pdb.set_trace()
         self.kwargs['username'] = self.request.user.get_username()
         return super().get(*args, **kwargs)
 
@@ -187,6 +189,7 @@ class PhotoEditView(LoginRequiredMixin, UpdateView):
 
 
 class AlbumEditView(LoginRequiredMixin, UpdateView):
+    """Renders view to add albums."""
     template_name = "imager_images/album_edit.html"
     model = Album
     form_class = AlbumEditForm
@@ -196,7 +199,6 @@ class AlbumEditView(LoginRequiredMixin, UpdateView):
     slug_field = 'id'
 
     def get(self, *args, **kwargs):
-        # import pdb; pdb.set_trace()
         self.kwargs['username'] = self.request.user.get_username()
         return super().get(*args, **kwargs)
 

@@ -8,6 +8,7 @@ from .forms import ProfileEditForm
 
 
 class ProfileView(DetailView):
+    """Renders profile view."""
     template_name = 'imager_profile/profile.html'
     context_object_name = 'profile'
     slug_url_kwargs = 'username'
@@ -42,6 +43,7 @@ class ProfileView(DetailView):
 
 
 class ProfileEditView(LoginRequiredMixin, UpdateView):
+    """Render edit profile view."""
     template_name = "imager_profile/profile_edit.html"
     model = ImagerProfile
     form_class = ProfileEditForm
