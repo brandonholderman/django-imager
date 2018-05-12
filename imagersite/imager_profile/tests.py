@@ -127,12 +127,12 @@ class ProfileRouteTests(TestCase):
         c = Client()
         response = c.get('/profile/')
         self.assertEqual(response.status_code, 302)
-    
+
     def test_active_class_method(self):
         """Test active class method."""
         all_active = ImagerProfile.active()
         self.assertIsNotNone(all_active)
-    
+
     def test_str_method_on_username(self):
         """Test string method on album."""
         one_profile = ImagerProfile.objects.first()
