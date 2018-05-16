@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'rest_framework.authtoken',
     'imagersite',
     'imager_profile',
     'imager_images',
@@ -114,6 +116,13 @@ AUTH_PASSWORD_VALIDATORS = [
     #                 .NumericPasswordValidator''',
     # },
 ]
+
+# # Django REST Framework Settings
+# REST_FRAMEWORK = {
+#     'DEFAULT_AUTHENTICATION_CLASSES': (
+#         'rest_framework.authentication.TokenAuthentication',
+#     )
+# }
 
 
 # Internationalization
