@@ -2,11 +2,19 @@
 - hosts: us-west-2
   remote_user: ubuntu
   environment:
-    SECRET_KEY: '{{SECRET_KEY}}'
-    DB_NAME: '{{ DB_NAME }}'
-    DB_USER: '{{ DB_USER }}'
-    DB_PASSWORD: '{{ DB_PASSWORD }}'
-    DB_HOST: '{{ DB_HOST }}'
+    DB_NAME: "{{ DB_NAME }}"
+    DB_USER: "{{ DB_USER }}"
+    SECRET_KEY: "{{ SECRET_KEY }}"
+    DB_PASSWORD: "{{ DB_PASSWORD }}"
+    DB_HOST: "{{ DB_HOST }}"
+    ALLOWED_HOSTS: "{{ ALLOWED_HOSTS }}"
+    DJANGO_SETTING_MODULES: "{{ DJANGO_SETTING_MODULES }}"
+    EMAIL_BACKEND: "{{ EMAIL_BACKEND }}"
+    EMAIL_HOST: "{{ EMAIL_HOST }}"
+    EMAIL_PORT: "{{ EMAIL_PORT }}"
+    EMAIL_HOST_PASSWORD: "{{ EMAIL_HOST_PASSWORD }}"
+    EMAIL_USE_TLS: "{{ EMAIL_USE_TLS }}"
+    DEFAULT_FROM_EMAIL: "{{ DEFAULT_FROM_EMAIL }}"
 
   tasks:
     - name: Update base ubuntu image
@@ -53,7 +61,7 @@
       become: yes
       become_method: sudo
 
-    - name: Make Migrations
+    - name: Migrate
       django_manage:
         command: migrate
         app_path: /home/ubuntu/django-imager/imagersite
