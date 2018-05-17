@@ -2,6 +2,7 @@ from django.db import models
 from multiselectfield import MultiSelectField
 from django.contrib.auth.models import User
 from django.dispatch import receiver
+from rest_framework.authtoken.models import Token
 
 
 class ImagerProfile(models.Model):
@@ -48,5 +49,6 @@ class ImagerProfile(models.Model):
 @receiver(models.signals.post_save, sender=User)
 def create_profile(sender, **kwargs):
     if kwargs['created']:
+        Token.objects.create(user=kwargs['instance'])
         profile = ImagerProfile(user=kwargs['instance'])
         profile.save()
