@@ -10,7 +10,7 @@ import random
 
 
 class UserFactory(factory.django.DjangoModelFactory):
-    """ Defines a mock user instance for testing """
+    """ Defines a mock user instance for testing. """
     class Meta:
         model = User
 

@@ -38,7 +38,6 @@ class ProfileView(DetailView):
             'photos': photos
             }
 
-        # import pdb; pdb.set_trace()
         return context
 
 

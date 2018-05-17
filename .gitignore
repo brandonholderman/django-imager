@@ -1,6 +1,9 @@
 
 # Created by https://www.gitignore.io/api/code,macos,linux,python,django,windows
 
+# hosts file
+hosts
+
 ### Code ###
 # Visual Studio Code - https://code.visualstudio.com/
 .settings/

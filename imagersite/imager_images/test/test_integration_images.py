@@ -30,7 +30,6 @@ class TestLibraryRoutes(TestCase):
         """Test string method on album."""
         user = User.objects.first()
         one_album = Album.objects.first()
-        # import pdb; pdb.set_trace()
         self.assertEqual(str(one_album), 'Untitled')
 
     def test_str_method_on_photo(self):
