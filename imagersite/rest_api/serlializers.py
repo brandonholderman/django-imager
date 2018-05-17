@@ -5,19 +5,19 @@ from django.contrib.auth.models import User
 
 class PhotoSerializer(serializers.HyperlinkedModelSerializer):
     """Convert ."""
-    cover = serializers.HyperlinkedModelSerializer(
-        view_name='photo-detail',
-        lookup_url_kwarg='pk',
-    )
+    # cover = serializers.HyperlinkedModelSerializer(
+    #     view_name='photo-detail',
+    #     lookup_url_kwarg='pk',
+    # )
 
-    user = serializers.HyperlinkedModelSerializer(
+    user = serializers.HyperlinkedIdentityField(
         view_name='user-detail',
         lookup_url_kwarg='username',
     )
 
     class Meta:
         model = Photo
-        fields = ('id', 'album', 'user' 'image', 'title', 'description', 'date_uploaded', 'date_modified', 'date_published', 'published')
+        fields = ('id', 'album', 'user', 'image', 'title', 'description', 'date_uploaded', 'date_modified', 'date_published', 'published')
 
 
 class UserSerializer(serializers.ModelSerializer):
