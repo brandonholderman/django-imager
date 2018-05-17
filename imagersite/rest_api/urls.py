@@ -6,5 +6,5 @@ from rest_framework.authtoken import views
 urlpatterns = [
     path('photo/', PhotoListApi.as_view(), name='photo_list_api'),
     path('user/', UserApi.as_view(), name='user-detail'),
-    path('auth-token-login/', views.obtain_auth_token),
+    path('login/', views.obtain_auth_token),
 ]
